@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://c4x33uyjhsfud"]
+
+[ext_resource type="Script" uid="uid://cqep8snq41v1w" path="res://Scripts/Player.gd" id="1_kyqiw"]
+[ext_resource type="Script" uid="uid://cgriix0qet1gj" path="res://Scripts/MovementComponent.gd" id="2_gntrk"]
+[ext_resource type="Script" uid="uid://bwq2eg0u7nygy" path="res://Scripts/DashComponent.gd" id="3_5ixxa"]
+[ext_resource type="Texture2D" uid="uid://bxu5itatabfr8" path="res://Assets/Sprites/TestPlayer.png" id="3_gntrk"]
+[ext_resource type="Script" uid="uid://dnb17cxfciytr" path="res://Scripts/LaunchComponent.gd" id="4_nn08x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dewec"]
+size = Vector2(40, 40)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
+radius = 18.0
+
+[node name="Player" type="CharacterBody2D" unique_id=464782827]
+script = ExtResource("1_kyqiw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=234362877]
+shape = SubResource("RectangleShape2D_dewec")
+
+[node name="DashHitbox" type="Area2D" parent="." unique_id=429536259]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DashHitbox" unique_id=1760294041]
+shape = SubResource("CircleShape2D_gntrk")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1574562807]
+
+[node name="Components" type="Node" parent="." unique_id=1866673433]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=789795351]
+scale = Vector2(5, 5)
+texture = ExtResource("3_gntrk")
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1741160042]
+script = ExtResource("2_gntrk")
+
+[node name="DashComponent" type="Node" parent="." unique_id=94963103]
+script = ExtResource("3_5ixxa")
+
+[node name="LaunchComponent" type="Node" parent="." unique_id=1855989546]
+script = ExtResource("4_nn08x")
