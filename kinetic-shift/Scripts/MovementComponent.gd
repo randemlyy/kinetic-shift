@@ -1,3 +1,4 @@
+class_name MovementComponent
 extends Node
 
 @export_group("Movement")
@@ -19,6 +20,7 @@ func tick(body: CharacterBody2D, delta: float, input_c: InputComponent) -> void:
 	else:
 		coyote_left = maxf(0.0, coyote_left - delta)
 		body.velocity.y += gravity * delta
+
 	if input_c.jump_pressed:
 		jump_buffer_left = jump_buffer_time
 	else:
@@ -29,10 +31,10 @@ func tick(body: CharacterBody2D, delta: float, input_c: InputComponent) -> void:
 		jump_buffer_left = 0.0
 		coyote_left = 0.0
 	
-	var dir = input_c.move_x
+	if input_c.move_x != 0.0:
+		facing = input_c.move_x
 
-	if dir != 0.0:
-		facing = dir
-		body.velocity.x = move_toward(body.velocity.x, dir * speed, acceleration * delta)
+		body.velocity.x = move_toward(body.velocity.x, facing * speed, acceleration * delta)
+	
 	else:
 		body.velocity.x = move_toward(body.velocity.x, 0.0, deceleration * delta)

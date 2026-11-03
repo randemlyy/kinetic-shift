@@ -41,6 +41,8 @@ script = ExtResource("3_5ixxa")
 
 [node name="LaunchComponent" type="Node" parent="." unique_id=1855989546]
 script = ExtResource("4_nn08x")
+launch_speed = 950.0
+launch_duration = 0.06
 
 [node name="InputComponent" type="Node" parent="." unique_id=999841695]
 script = ExtResource("6_nn08x")

@@ -1,3 +1,4 @@
+class_name LaunchComponent
 extends Node
 
 @export_group("Launch")

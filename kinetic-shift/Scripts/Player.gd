@@ -1,16 +1,17 @@
 extends CharacterBody2D
 
-@onready var input_c = $InputComponent
-@onready var dash_c = $DashComponent
-@onready var launch_c = $LaunchComponent
-@onready var movement_c = $MovementComponent
+@onready var input_c: InputComponent = $InputComponent
+@onready var dash_c: DashComponent = $DashComponent
+@onready var launch_c: LaunchComponent = $LaunchComponent
+@onready var movement_c: MovementComponent = $MovementComponent
 
 func _ready() -> void:
 	dash_c.hitbox = $DashHitbox
-	dash_c.enemy_hit.connect(_on_enemy_hit)
+	dash_c.hitbox.monitoring = false
 
 func _physics_process(delta: float) -> void:
 	input_c.update_input()
+
 	if is_on_floor():
 		dash_c.refresh()
 	
@@ -31,9 +32,24 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	if dash_c.active:
-		dash_c.check_targets(input_c)
-		if dash_c.active:
+
+		var enemy := dash_c.find_enemy()
+
+		if enemy != null:
+			if enemy.has_method("die"):
+				enemy.call("die")
+			
+			else:
+				_disable_enemy_hitbox(enemy)
+			
+			dash_c.finish()
+			launch_c.start(dash_c.launch_direction(input_c.move_dir))
+			dash_c.refresh()
+			print("Dash hit: ", enemy.name)
+			
+		elif dash_c.active:
 			dash_c.advance(delta)
 
-func _on_enemy_hit(launch_dir: Vector2) -> void:
-	launch_c.start(launch_dir)
+func _disable_enemy_hitbox(enemy: PhysicsBody2D) -> void:
+	for shape in enemy.find_children("*", "CollisionShape2D", true, false):
+		(shape as CollisionShape2D).set_deferred("disabled", true)
