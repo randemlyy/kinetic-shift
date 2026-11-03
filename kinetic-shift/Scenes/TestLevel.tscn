@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bc0crnlampe6q" path="res://Scenes/Platform.tscn" id="1_5ms4e"]
 [ext_resource type="PackedScene" uid="uid://c4x33uyjhsfud" path="res://Scenes/Player.tscn" id="2_shgkq"]
+[ext_resource type="PackedScene" uid="uid://dagwlnp7vfxpo" path="res://Scenes/TestEnemy.tscn" id="3_shgkq"]
 
 [node name="Node2D" type="Node2D" unique_id=1774890080]
 
@@ -11,3 +12,10 @@ scale = Vector2(64.21, 1)
 
 [node name="Player" parent="." unique_id=464782827 instance=ExtResource("2_shgkq")]
 position = Vector2(48, 378)
+
+[node name="Platform2" parent="." unique_id=123808926 instance=ExtResource("1_5ms4e")]
+position = Vector2(259.185, 354)
+scale = Vector2(4.665, 1)
+
+[node name="TestEnemy" parent="." unique_id=348861785 instance=ExtResource("3_shgkq")]
+position = Vector2(162, 393)

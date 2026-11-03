@@ -1,7 +1,8 @@
 extends Node
 
-@export var launch_speed := 460.0
-@export var launch_duration := 0.16
+@export_group("Launch")
+@export var launch_speed := 650.0
+@export var launch_duration := 0.14
 
 var active := false
 var direction := Vector2.ZERO

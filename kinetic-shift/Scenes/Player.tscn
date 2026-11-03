@@ -5,12 +5,13 @@
 [ext_resource type="Script" uid="uid://bwq2eg0u7nygy" path="res://Scripts/DashComponent.gd" id="3_5ixxa"]
 [ext_resource type="Texture2D" uid="uid://bxu5itatabfr8" path="res://Assets/Sprites/TestPlayer.png" id="3_gntrk"]
 [ext_resource type="Script" uid="uid://dnb17cxfciytr" path="res://Scripts/LaunchComponent.gd" id="4_nn08x"]
+[ext_resource type="Script" uid="uid://3y1ldggyhm0a" path="res://Scripts/InputComponent.gd" id="6_nn08x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dewec"]
 size = Vector2(40, 40)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
-radius = 18.0
+radius = 28.0
 
 [node name="Player" type="CharacterBody2D" unique_id=464782827]
 script = ExtResource("1_kyqiw")
@@ -19,6 +20,7 @@ script = ExtResource("1_kyqiw")
 shape = SubResource("RectangleShape2D_dewec")
 
 [node name="DashHitbox" type="Area2D" parent="." unique_id=429536259]
+collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DashHitbox" unique_id=1760294041]
 shape = SubResource("CircleShape2D_gntrk")
@@ -39,3 +41,6 @@ script = ExtResource("3_5ixxa")
 
 [node name="LaunchComponent" type="Node" parent="." unique_id=1855989546]
 script = ExtResource("4_nn08x")
+
+[node name="InputComponent" type="Node" parent="." unique_id=999841695]
+script = ExtResource("6_nn08x")
