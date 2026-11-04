@@ -2,19 +2,22 @@
 
 [ext_resource type="Script" uid="uid://cqep8snq41v1w" path="res://Scripts/Player.gd" id="1_kyqiw"]
 [ext_resource type="Script" uid="uid://cgriix0qet1gj" path="res://Scripts/MovementComponent.gd" id="2_gntrk"]
-[ext_resource type="Texture2D" uid="uid://ca7yaeqtht5lf" path="res://Assets/Sprites/PlayerSpriteSheet.png" id="2_megsn"]
+[ext_resource type="Texture2D" uid="uid://ca7yaeqtht5lf" path="res://Assets/Sprites/Spritesheets/PlayerSpriteSheet.png" id="2_megsn"]
 [ext_resource type="Script" uid="uid://bwq2eg0u7nygy" path="res://Scripts/DashComponent.gd" id="3_5ixxa"]
 [ext_resource type="Script" uid="uid://dnb17cxfciytr" path="res://Scripts/LaunchComponent.gd" id="4_nn08x"]
 [ext_resource type="Script" uid="uid://3y1ldggyhm0a" path="res://Scripts/InputComponent.gd" id="6_nn08x"]
 [ext_resource type="Script" uid="uid://ddjk6olmpmyo4" path="res://Scripts/HitStopComponent.gd" id="7_52ee3"]
 [ext_resource type="Script" uid="uid://duksvcjvuuldk" path="res://Scripts/DashEffectComponent.gd" id="8_bhhdu"]
 [ext_resource type="Script" uid="uid://b6l163x4cfueg" path="res://Scripts/LaunchEffectComponent.gd" id="9_megsn"]
+[ext_resource type="Script" uid="uid://dmap1vupvx60f" path="res://Scripts/ParticleComponent.gd" id="10_ksbbd"]
+[ext_resource type="PackedScene" uid="uid://du1jji02ho1l4" path="res://Scenes/Particles/LandingDust.tscn" id="11_glx4g"]
+[ext_resource type="PackedScene" uid="uid://bmm3neyxq677q" path="res://Scenes/Particles/DashBurst.tscn" id="11_miouo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dewec"]
-size = Vector2(40, 40)
+size = Vector2(34, 31)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
-radius = 28.0
+radius = 25.0
 
 [sub_resource type="Animation" id="Animation_yoq75"]
 resource_name = "Idle"
@@ -78,12 +81,14 @@ _data = {
 script = ExtResource("1_kyqiw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=234362877]
+position = Vector2(-1, 4.5)
 shape = SubResource("RectangleShape2D_dewec")
 
 [node name="DashHitbox" type="Area2D" parent="." unique_id=429536259]
 collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DashHitbox" unique_id=1760294041]
+position = Vector2(-0.83, 4.205)
 shape = SubResource("CircleShape2D_gntrk")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1574562807]
@@ -122,3 +127,8 @@ script = ExtResource("9_megsn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=584641670]
 libraries/ = SubResource("AnimationLibrary_miouo")
+
+[node name="ParticleComponent" type="Node2D" parent="." unique_id=1041298305]
+script = ExtResource("10_ksbbd")
+dash_effect = ExtResource("11_miouo")
+landing_effect = ExtResource("11_glx4g")
