@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://bxu5itatabfr8" path="res://Assets/Sprites/TestPlayer.png" id="3_gntrk"]
 [ext_resource type="Script" uid="uid://dnb17cxfciytr" path="res://Scripts/LaunchComponent.gd" id="4_nn08x"]
 [ext_resource type="Script" uid="uid://3y1ldggyhm0a" path="res://Scripts/InputComponent.gd" id="6_nn08x"]
+[ext_resource type="Script" uid="uid://ddjk6olmpmyo4" path="res://Scripts/HitStopComponent.gd" id="7_52ee3"]
+[ext_resource type="Script" uid="uid://duksvcjvuuldk" path="res://Scripts/DashEffectComponent.gd" id="8_bhhdu"]
+[ext_resource type="Script" uid="uid://b6l163x4cfueg" path="res://Scripts/LaunchEffectComponent.gd" id="9_megsn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dewec"]
 size = Vector2(40, 40)
@@ -46,3 +49,13 @@ launch_duration = 0.06
 
 [node name="InputComponent" type="Node" parent="." unique_id=999841695]
 script = ExtResource("6_nn08x")
+
+[node name="HitStopComponent" type="Node" parent="." unique_id=1394426508]
+script = ExtResource("7_52ee3")
+duration = 0.1
+
+[node name="DashEffectComponent" type="Node" parent="." unique_id=1684716936]
+script = ExtResource("8_bhhdu")
+
+[node name="LaunchEffectComponent" type="Node" parent="." unique_id=920421789]
+script = ExtResource("9_megsn")

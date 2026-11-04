@@ -4,6 +4,9 @@ extends CharacterBody2D
 @onready var dash_c: DashComponent = $DashComponent
 @onready var launch_c: LaunchComponent = $LaunchComponent
 @onready var movement_c: MovementComponent = $MovementComponent
+@onready var hitstop_c: HitStopComponent = $HitStopComponent
+@onready var dash_effect: DashEffectComponent = $DashEffectComponent
+@onready var launch_effect: LaunchEffectComponent = $LaunchEffectComponent
 
 func _ready() -> void:
 	dash_c.hitbox = $DashHitbox
@@ -31,6 +34,9 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+	dash_effect.update_effect(delta, dash_c.active)
+	launch_effect.update_effect(delta, launch_c.active)
+	
 	if dash_c.active:
 
 		var enemy := dash_c.find_enemy()
@@ -43,10 +49,9 @@ func _physics_process(delta: float) -> void:
 				_disable_enemy_hitbox(enemy)
 			
 			dash_c.finish()
+			await hitstop_c.play()
 			launch_c.start(dash_c.launch_direction(input_c.move_dir))
 			dash_c.refresh()
-			print("Dash hit: ", enemy.name)
-			
 		elif dash_c.active:
 			dash_c.advance(delta)
 
