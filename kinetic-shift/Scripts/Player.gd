@@ -7,6 +7,8 @@ extends CharacterBody2D
 @onready var hitstop_c: HitStopComponent = $HitStopComponent
 @onready var dash_effect: DashEffectComponent = $DashEffectComponent
 @onready var launch_effect: LaunchEffectComponent = $LaunchEffectComponent
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var player_sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
 	dash_c.hitbox = $DashHitbox
@@ -14,6 +16,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	input_c.update_input()
+
+	if input_c.move_x != 0.0:
+		player_sprite.flip_h = input_c.move_x < 0.0
 
 	if is_on_floor():
 		dash_c.refresh()
@@ -33,6 +38,7 @@ func _physics_process(delta: float) -> void:
 		movement_c.tick(self, delta, input_c)
 
 	move_and_slide()
+	_update_animation()
 
 	dash_effect.update_effect(delta, dash_c.active)
 	launch_effect.update_effect(delta, launch_c.active)
@@ -58,3 +64,16 @@ func _physics_process(delta: float) -> void:
 func _disable_enemy_hitbox(enemy: PhysicsBody2D) -> void:
 	for shape in enemy.find_children("*", "CollisionShape2D", true, false):
 		(shape as CollisionShape2D).set_deferred("disabled", true)
+
+func _update_animation() -> void:
+	if not is_on_floor():
+		animation_player.pause()
+		return
+
+	var anim = "Idle"
+	
+	if is_on_floor() and not dash_c.active and not launch_c.active and absf(velocity.x) > 5.0:
+		anim = "Walk"
+	
+	if animation_player.current_animation != anim or not animation_player.is_playing():
+		animation_player.play(anim)

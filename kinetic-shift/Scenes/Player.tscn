@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cqep8snq41v1w" path="res://Scripts/Player.gd" id="1_kyqiw"]
 [ext_resource type="Script" uid="uid://cgriix0qet1gj" path="res://Scripts/MovementComponent.gd" id="2_gntrk"]
+[ext_resource type="Texture2D" uid="uid://ca7yaeqtht5lf" path="res://Assets/Sprites/PlayerSpriteSheet.png" id="2_megsn"]
 [ext_resource type="Script" uid="uid://bwq2eg0u7nygy" path="res://Scripts/DashComponent.gd" id="3_5ixxa"]
-[ext_resource type="Texture2D" uid="uid://bxu5itatabfr8" path="res://Assets/Sprites/TestPlayer.png" id="3_gntrk"]
 [ext_resource type="Script" uid="uid://dnb17cxfciytr" path="res://Scripts/LaunchComponent.gd" id="4_nn08x"]
 [ext_resource type="Script" uid="uid://3y1ldggyhm0a" path="res://Scripts/InputComponent.gd" id="6_nn08x"]
 [ext_resource type="Script" uid="uid://ddjk6olmpmyo4" path="res://Scripts/HitStopComponent.gd" id="7_52ee3"]
@@ -15,6 +15,64 @@ size = Vector2(40, 40)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
 radius = 28.0
+
+[sub_resource type="Animation" id="Animation_yoq75"]
+resource_name = "Idle"
+length = 0.5
+loop_mode = 2
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_ksbbd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_glx4g"]
+resource_name = "Walk"
+length = 0.4
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [8, 9, 8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_miouo"]
+_data = {
+&"Idle": SubResource("Animation_yoq75"),
+&"RESET": SubResource("Animation_ksbbd"),
+&"Walk": SubResource("Animation_glx4g")
+}
 
 [node name="Player" type="CharacterBody2D" unique_id=464782827 groups=["Player"]]
 script = ExtResource("1_kyqiw")
@@ -34,7 +92,9 @@ shape = SubResource("CircleShape2D_gntrk")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=789795351]
 scale = Vector2(5, 5)
-texture = ExtResource("3_gntrk")
+texture = ExtResource("2_megsn")
+hframes = 8
+vframes = 8
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1741160042]
 script = ExtResource("2_gntrk")
@@ -59,3 +119,6 @@ script = ExtResource("8_bhhdu")
 
 [node name="LaunchEffectComponent" type="Node" parent="." unique_id=920421789]
 script = ExtResource("9_megsn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=584641670]
+libraries/ = SubResource("AnimationLibrary_miouo")
