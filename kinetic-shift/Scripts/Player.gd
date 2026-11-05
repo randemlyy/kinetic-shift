@@ -65,7 +65,7 @@ func _physics_process(delta: float) -> void:
 	
 
 	# Launch check
-	if dash_c.active:
+	if dash_c.active or dash_c.hit_window_left >= 0.0:
 
 		var enemy := dash_c.find_enemy()
 
@@ -82,6 +82,9 @@ func _physics_process(delta: float) -> void:
 			dash_c.refresh()
 		elif dash_c.active:
 			dash_c.advance(delta)
+		
+		else:
+			dash_c.tick_hit_window(delta)
 
 func _update_dash_visual(delta: float) -> void:
 	var prev_weight = dash_visual_weight

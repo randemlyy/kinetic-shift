@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://cn5dick7igwas"]
+
+[ext_resource type="Script" uid="uid://cvfu460ypm1hj" path="res://Scripts/Enemy/Wisp.gd" id="1_drone"]
+[ext_resource type="Texture2D" uid="uid://dvwpfool1q3f3" path="res://Assets/Sprites/Spritesheets/WispSpriteSheet.png" id="2_o1bsx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lfikv"]
+size = Vector2(14, 14)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p6pso"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsweg"]
+atlas = ExtResource("2_o1bsx")
+region = Rect2(0, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dor3"]
+atlas = ExtResource("2_o1bsx")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t1gvo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsweg")
+}],
+"loop": true,
+"name": &"Chase",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dor3")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Drone" type="CharacterBody2D" unique_id=1400896138]
+scale = Vector2(2, 2)
+script = ExtResource("1_drone")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1430083641]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_lfikv")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1963765591]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1560249750]
+shape = SubResource("CircleShape2D_p6pso")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=522339162]
+scale = Vector2(1.97, 1.97)
+sprite_frames = SubResource("SpriteFrames_t1gvo")
+animation = &"Idle"

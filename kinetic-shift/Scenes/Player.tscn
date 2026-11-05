@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c4x33uyjhsfud"]
 
 [ext_resource type="Script" uid="uid://cqep8snq41v1w" path="res://Scripts/Player.gd" id="1_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://d2cpk1ivsitky" path="res://Assets/Sprites/PlayerSpriteSheet2.png" id="2_glx4g"]
+[ext_resource type="Texture2D" uid="uid://d2cpk1ivsitky" path="res://Assets/Sprites/Spritesheets/PlayerSpriteSheet.png" id="2_glx4g"]
 [ext_resource type="Script" uid="uid://cgriix0qet1gj" path="res://Scripts/MovementComponent.gd" id="2_gntrk"]
 [ext_resource type="Script" uid="uid://bwq2eg0u7nygy" path="res://Scripts/DashComponent.gd" id="3_5ixxa"]
 [ext_resource type="Script" uid="uid://dnb17cxfciytr" path="res://Scripts/LaunchComponent.gd" id="4_nn08x"]
@@ -17,7 +17,7 @@
 size = Vector2(20, 30)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
-radius = 18.5
+radius = 22.0
 
 [sub_resource type="Animation" id="Animation_miouo"]
 resource_name = "Dash"
@@ -81,10 +81,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [8, 9, 8]
+"values": [16, 17, 18, 19]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_miouo"]

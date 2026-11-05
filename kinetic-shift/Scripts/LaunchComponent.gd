@@ -2,8 +2,8 @@ class_name LaunchComponent
 extends Node
 
 @export_group("Launch")
-@export var launch_speed := 650.0
-@export var launch_duration := 0.14
+@export var launch_speed := 400.0
+@export var launch_duration := 0.12
 
 var active := false
 var direction := Vector2.ZERO
