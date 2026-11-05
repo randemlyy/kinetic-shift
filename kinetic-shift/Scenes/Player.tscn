@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c4x33uyjhsfud"]
 
 [ext_resource type="Script" uid="uid://cqep8snq41v1w" path="res://Scripts/Player.gd" id="1_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://d2cpk1ivsitky" path="res://Assets/Sprites/PlayerSpriteSheet2.png" id="2_glx4g"]
 [ext_resource type="Script" uid="uid://cgriix0qet1gj" path="res://Scripts/MovementComponent.gd" id="2_gntrk"]
-[ext_resource type="Texture2D" uid="uid://ca7yaeqtht5lf" path="res://Assets/Sprites/Spritesheets/PlayerSpriteSheet.png" id="2_megsn"]
 [ext_resource type="Script" uid="uid://bwq2eg0u7nygy" path="res://Scripts/DashComponent.gd" id="3_5ixxa"]
 [ext_resource type="Script" uid="uid://dnb17cxfciytr" path="res://Scripts/LaunchComponent.gd" id="4_nn08x"]
 [ext_resource type="Script" uid="uid://3y1ldggyhm0a" path="res://Scripts/InputComponent.gd" id="6_nn08x"]
@@ -14,10 +14,27 @@
 [ext_resource type="PackedScene" uid="uid://bmm3neyxq677q" path="res://Scenes/Particles/DashBurst.tscn" id="11_miouo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dewec"]
-size = Vector2(34, 31)
+size = Vector2(20, 30)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
-radius = 25.0
+radius = 18.5
+
+[sub_resource type="Animation" id="Animation_miouo"]
+resource_name = "Dash"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [25]
+}
 
 [sub_resource type="Animation" id="Animation_yoq75"]
 resource_name = "Idle"
@@ -72,16 +89,20 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_miouo"]
 _data = {
+&"Dash": SubResource("Animation_miouo"),
 &"Idle": SubResource("Animation_yoq75"),
 &"RESET": SubResource("Animation_ksbbd"),
 &"Walk": SubResource("Animation_glx4g")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_glx4g"]
+size = Vector2(20, 30)
+
 [node name="Player" type="CharacterBody2D" unique_id=464782827 groups=["Player"]]
 script = ExtResource("1_kyqiw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=234362877]
-position = Vector2(-1, 4.5)
+position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_dewec")
 
 [node name="DashHitbox" type="Area2D" parent="." unique_id=429536259]
@@ -97,7 +118,7 @@ shape = SubResource("CircleShape2D_gntrk")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=789795351]
 scale = Vector2(5, 5)
-texture = ExtResource("2_megsn")
+texture = ExtResource("2_glx4g")
 hframes = 8
 vframes = 8
 
@@ -132,3 +153,9 @@ libraries/ = SubResource("AnimationLibrary_miouo")
 script = ExtResource("10_ksbbd")
 dash_effect = ExtResource("11_miouo")
 landing_effect = ExtResource("11_glx4g")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1924119600]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1527215754]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_glx4g")

@@ -1,22 +1,64 @@
-[gd_scene format=3 uid="uid://blys1hyoqisdj"]
+[gd_scene format=4 uid="uid://blys1hyoqisdj"]
 
-[ext_resource type="PackedScene" uid="uid://bc0crnlampe6q" path="res://Scenes/Platform.tscn" id="1_5ms4e"]
 [ext_resource type="PackedScene" uid="uid://c4x33uyjhsfud" path="res://Scenes/Player.tscn" id="2_shgkq"]
 [ext_resource type="PackedScene" uid="uid://cn5dick7igwas" path="res://Scenes/Drone.tscn" id="3_drone"]
+[ext_resource type="Texture2D" uid="uid://c10m1ycq8a2qp" path="res://Assets/Sprites/Spritesheets/TileMap.png" id="4_ujyaq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oy2kj"]
+texture = ExtResource("4_ujyaq")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+
+[sub_resource type="TileSet" id="TileSet_sa0i8"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_oy2kj")
 
 [node name="Node2D" type="Node2D" unique_id=1774890080]
 
-[node name="Platform" parent="." unique_id=1674112237 instance=ExtResource("1_5ms4e")]
-position = Vector2(526.07, 434.64)
-scale = Vector2(64.21, 1)
-
 [node name="Player" parent="." unique_id=464782827 instance=ExtResource("2_shgkq")]
-position = Vector2(178, -1052)
-
-[node name="Platform2" parent="." unique_id=123808926 instance=ExtResource("1_5ms4e")]
-position = Vector2(175, -740)
-scale = Vector2(4.665, 1)
+position = Vector2(14, 517)
 
 [node name="Drone" parent="." unique_id=1400896138 instance=ExtResource("3_drone")]
-position = Vector2(409, 311)
+position = Vector2(369, 313)
 detection_range = 160.0
+
+[node name="Drone2" parent="." unique_id=1621283407 instance=ExtResource("3_drone")]
+position = Vector2(580, 181)
+detection_range = 160.0
+
+[node name="Drone3" parent="." unique_id=1409225693 instance=ExtResource("3_drone")]
+position = Vector2(775, 12)
+detection_range = 160.0
+
+[node name="Drone4" parent="." unique_id=1391938776 instance=ExtResource("3_drone")]
+position = Vector2(970, 16)
+detection_range = 160.0
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=2074500035]
+scale = Vector2(5, 5)
+tile_map_data = PackedByteArray("AAAAAEUAAAAAAAAAAAAAAEYAAAAAAAEAAAAAAEcAAAAAAAEAAAAAAEgAAAAAAAEAAAAAAEkAAAAAAAEAAAAAAEoAAAAAAAEAAAAAAEsAAAAAAAEAAAAAAEwAAAAAAAEAAAAAAE0AAAAAAAEAAAAAAE4AAAAAAAEAAAAAAE8AAAAAAAEAAAAAAFAAAAAAAAEAAAABAEUAAAABAAAAAAACAEUAAAABAAAAAAADAEUAAAABAAAAAAAEAEUAAAABAAAAAAAFAEUAAAABAAAAAAAGAEUAAAABAAAAAAAHAEUAAAABAAAAAAAIAEUAAAABAAAAAAAJAEUAAAABAAAAAAAKAEUAAAABAAAAAAALAEUAAAABAAAAAAAMAEUAAAABAAAAAAANAEUAAAABAAAAAAAOAEUAAAABAAAAAAAPAEUAAAABAAAAAAAQAEUAAAACAAAAAAAQAEYAAAACAAEAAAAQAEcAAAACAAEAAAAQAEgAAAACAAEAAAAQAEkAAAACAAEAAAAQAEoAAAACAAEAAAAQAEsAAAACAAEAAAAQAEwAAAACAAEAAAAQAE0AAAACAAEAAAAQAE4AAAACAAEAAAAQAE8AAAACAAEAAAAQAFAAAAACAAEAAAAAAA4AAAAAAAAAAAABAA4AAAABAAAAAAACAA4AAAABAAAAAAADAA4AAAABAAAAAAAEAA4AAAABAAAAAAAFAA4AAAABAAAAAAAGAA4AAAABAAAAAAAHAA4AAAABAAAAAAAIAA4AAAABAAAAAAAJAA4AAAABAAAAAAAKAA4AAAABAAAAAAAAAA8AAAAAAAEAAAAAABAAAAAAAAEAAAAAABEAAAAAAAEAAAAAABIAAAAAAAEAAAAAABMAAAAAAAEAAAAAABQAAAAAAAEAAAAAABUAAAAAAAEAAAALAA4AAAABAAAAAAAMAA4AAAABAAEAAAANAA4AAAABAAAAAAAOAA4AAAABAAAAAAAPAA4AAAABAAAAAAAQAA4AAAABAAAAAAARAA4AAAABAAAAAAASAA4AAAABAAAAAAATAA4AAAABAAAAAAAUAA4AAAABAAAAAAAVAA4AAAABAAAAAAAWAA4AAAABAAAAAAAXAA4AAAABAAAAAAAYAA4AAAABAAAAAAAZAA4AAAABAAAAAAAaAA4AAAABAAAAAAAbAA4AAAABAAAAAAAcAA4AAAACAAAAAAAcAA8AAAACAAEAAAAcABAAAAACAAEAAAAcABEAAAACAAEAAAAcABIAAAACAAEAAAAcABMAAAACAAEAAAAcABQAAAACAAEAAAAcABUAAAACAAEAAAAcABYAAAACAAEAAAAMAAYAAAAEAAAAAAAMAAcAAAAEAAEAAAAMAAgAAAAEAAEAAAAMAAkAAAAEAAEAAAAMAAoAAAAEAAEAAAAMAAsAAAAEAAEAAAAMAAwAAAAEAAEAAAAMAA0AAAAEAAEAAAAfAAEAAAAAAAAAAAAfAAIAAAAAAAIAAAAgAAEAAAABAAAAAAAgAAIAAAABAAIAAAAhAAEAAAABAAAAAAAhAAIAAAABAAIAAAAiAAEAAAABAAAAAAAiAAIAAAABAAIAAAAjAAEAAAABAAAAAAAjAAIAAAABAAIAAAAkAAEAAAACAAAAAAAkAAIAAAACAAIAAAA=")
+tile_set = SubResource("TileSet_sa0i8")
