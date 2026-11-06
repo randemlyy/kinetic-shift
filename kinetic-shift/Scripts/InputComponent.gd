@@ -9,5 +9,8 @@ var dash_pressed := false
 func update_input() -> void:
 	move_x = Input.get_axis("move_left", "move_right")
 	move_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if Input.is_action_pressed("jump"):
+		move_dir.y = -1.0
+		move_dir = move_dir.normalized()
 	jump_pressed = Input.is_action_just_pressed("jump")
 	dash_pressed = Input.is_action_just_pressed("dash")

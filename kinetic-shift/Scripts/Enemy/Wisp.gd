@@ -8,7 +8,7 @@ enum State {
 }
 
 @export var detection_range = 160.0
-@export var chase_speed = 40.0
+@export var chase_speed = 80.0
 @export var idle_radius = Vector2(8.0, 4.0)
 @export var idle_frequency = 2.0
 @export var idle_drift = 3.0
