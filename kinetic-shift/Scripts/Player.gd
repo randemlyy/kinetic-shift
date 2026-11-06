@@ -22,6 +22,7 @@ func _ready() -> void:
 	dash_c.hitbox = $DashHitbox
 	dash_c.hitbox.monitoring = false
 	normal_sprite_scale = player_sprite.scale
+	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 
 func _physics_process(delta: float) -> void:
 	var was_on_floor = is_on_floor()
@@ -106,6 +107,28 @@ func _update_dash_visual(delta: float) -> void:
 func _disable_enemy_hitbox(enemy: PhysicsBody2D) -> void:
 	for shape in enemy.find_children("*", "CollisionShape2D", true, false):
 		(shape as CollisionShape2D).set_deferred("disabled", true)
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if dead or not body.is_in_group("Enemy"):
+		return
+	
+	# Checks if dashing and the enemy that player collides with is getting targetted by the dash
+	if dash_c.active and dash_c.find_enemy() == body:
+		return
+
+	die()
+	
+func die() -> void:
+	# if dead:
+	# 	return
+	
+	# dead = true
+	# velocity = Vector2.ZERO
+	# set_physics_process(false)
+	# dash_c.finish()
+	# $CollisionShape2D.set_deferred("monitoring", false)
+	# get_tree().call_deferred("reload_current_scene") 
+	pass
 
 func _update_animation() -> void:
 	if dash_c.active or dash_visual_weight > 0.01:
