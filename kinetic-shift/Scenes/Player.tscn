@@ -17,7 +17,7 @@
 size = Vector2(20, 30)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
-radius = 22.0
+radius = 20.0
 
 [sub_resource type="Animation" id="Animation_miouo"]
 resource_name = "Dash"

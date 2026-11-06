@@ -99,10 +99,12 @@ func _on_animation_finished() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
+		add_collision_exception_with(body)
 		player = body
 		_change_state(State.CHASE)
 
 func _on_body_exited(body: Node2D) -> void:
 	if body == player:
+		add_collision_exception_with(body)
 		player = null
 		_change_state(State.IDLE)
