@@ -2,11 +2,11 @@ class_name MovementComponent
 extends Node
 
 @export_group("Movement")
-@export var speed = 240.0
+@export var speed = 350.0
 @export var acceleration = 1800.0
 @export var deceleration = 2200.0
-@export var gravity = 1500.0
-@export var jump_speed = 500.0
+@export var gravity = 3200.0
+@export var jump_speed = 1050.0
 @export var coyote_time = 0.10
 @export var jump_buffer_time = 0.10
 
