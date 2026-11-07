@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var dash_c: DashComponent = $DashComponent
 @onready var launch_c: LaunchComponent = $LaunchComponent
 @onready var movement_c: MovementComponent = $MovementComponent
+@onready var wall_cling_c: WallClingComponent = $WallClingComponent
 @onready var particle_c: ParticleComponent = $ParticleComponent
 @onready var hitstop_c: HitStopComponent = $HitStopComponent
 

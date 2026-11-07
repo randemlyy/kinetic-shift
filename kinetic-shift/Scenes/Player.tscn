@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dmap1vupvx60f" path="res://Scripts/ParticleComponent.gd" id="10_ksbbd"]
 [ext_resource type="PackedScene" uid="uid://du1jji02ho1l4" path="res://Scenes/Particles/LandingDust.tscn" id="11_glx4g"]
 [ext_resource type="PackedScene" uid="uid://bmm3neyxq677q" path="res://Scenes/Particles/DashBurst.tscn" id="11_miouo"]
+[ext_resource type="Script" uid="uid://na48b13aakkg" path="res://Scripts/WallClingComponent.gd" id="13_miouo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dewec"]
 size = Vector2(20, 30)
@@ -159,3 +160,6 @@ landing_effect = ExtResource("11_glx4g")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1527215754]
 position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_glx4g")
+
+[node name="WallClingComponent" type="Node" parent="." unique_id=953361937]
+script = ExtResource("13_miouo")
