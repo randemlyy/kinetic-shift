@@ -25,48 +25,66 @@ func _ready() -> void:
 	normal_sprite_scale = player_sprite.scale
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 
+
 func _physics_process(delta: float) -> void:
+
+	# Update wall cling timer and rotation.
+	wall_cling_c.update(delta)
+
 	var was_on_floor = is_on_floor()
+
 	input_c.update_input()
 
-	if input_c.move_x != 0.0:
+	# Update player facing direction.
+	if not wall_cling_c.active and input_c.move_x != 0.0:
 		player_sprite.flip_h = input_c.move_x < 0.0
 
-	if is_on_floor():
+	# Refresh dash when grounded.
+	if is_on_floor() and not wall_cling_c.active:
 		dash_c.refresh()
-	
-	# Dash input check and dash particle effect
-	if not dash_c.active and not launch_c.active:
+
+	# Dash input check.
+	if not wall_cling_c.active and not dash_c.active and not launch_c.active:
 		if input_c.dash_pressed and dash_c.can_start():
 			normal_sprite_flip_h = player_sprite.flip_h
 			dash_c.start(movement_c.facing, input_c.move_dir)
 			particle_c.play_dash(dash_c.direction)
 
+	# Handle player movement.
+	if wall_cling_c.active:
+		velocity = Vector2.ZERO
 
-	# Handling dash and launch velocity
-	if dash_c.active:
+	elif dash_c.active:
 		velocity = dash_c.velocity_for_frame(delta)
-	
+
 	elif launch_c.active:
 		launch_c.tick(delta)
 		velocity = launch_c.current_velocity()
-	
+
 	else:
 		movement_c.tick(self, delta, input_c)
 
 	var landing_speed = maxf(velocity.y, 0.0)
+
 	move_and_slide()
 
+	# Landing particles.
 	if not was_on_floor and is_on_floor():
 		particle_c.play_landing(Vector2(0.0, 20.0), landing_speed)
 
+	# Detect new wall or ceiling contact.
+	# Never start clinging during a dash or launch.
+	if not wall_cling_c.active and not dash_c.active and dash_c.hit_window_left <= 0.0 and not launch_c.active:
+		wall_cling_c.try_start(self)
+
+	# Update visuals and animation.
 	_update_dash_visual(delta)
 	_update_animation()
+
 	dash_effect.update_effect(delta, dash_c.active)
 	launch_effect.update_effect(delta, launch_c.active)
-	
 
-	# Launch check
+	# Enemy hit detection and launch.
 	if dash_c.active or dash_c.hit_window_left >= 0.0:
 
 		var enemy := dash_c.find_enemy()
@@ -74,20 +92,22 @@ func _physics_process(delta: float) -> void:
 		if enemy != null:
 			if enemy.has_method("die"):
 				enemy.call("die")
-			
+
 			else:
 				_disable_enemy_hitbox(enemy)
-			
+
 			dash_c.finish()
 			await hitstop_c.play()
 			launch_c.start(dash_c.launch_direction(input_c.move_dir))
 			dash_c.refresh()
+
 		elif dash_c.active:
 			dash_c.advance(delta)
-		
+
 		else:
 			dash_c.tick_hit_window(delta)
 
+	
 func _update_dash_visual(delta: float) -> void:
 	var prev_weight = dash_visual_weight
 	var target = 1.0 if dash_c.active else 0.0
@@ -100,7 +120,7 @@ func _update_dash_visual(delta: float) -> void:
 	elif prev_weight > 0.01:
 		player_sprite.flip_h = input_c.move_x < 0.0 if input_c.move_x != 0.0 else normal_sprite_flip_h
 	
-	player_sprite.rotation = dash_c.direction.angle() * dash_visual_weight
+	player_sprite.rotation = wall_cling_c.visual_rotation + dash_c.direction.angle() * dash_visual_weight
 	player_sprite.scale = normal_sprite_scale.lerp(normal_sprite_scale * Vector2(1.5, 0.8), dash_visual_weight)
 	player_sprite.modulate = Color.WHITE.lerp(Color(0.05, 0.05, 0.08, 0.85), dash_visual_weight)
 
@@ -132,6 +152,12 @@ func die() -> void:
 	pass
 
 func _update_animation() -> void:
+	
+	if wall_cling_c.active:
+		if animation_player.current_animation != "Idle":
+			animation_player.play("Idle")
+		return
+		
 	if dash_c.active or dash_visual_weight > 0.01:
 		if animation_player.current_animation != "Dash":
 			animation_player.play("Dash")
