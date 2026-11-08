@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var wall_cling_c: WallClingComponent = $WallClingComponent
 @onready var particle_c: ParticleComponent = $ParticleComponent
 @onready var hitstop_c: HitStopComponent = $HitStopComponent
+@onready var health_c: HealthComponent = $HealthComponent
 
 @onready var dash_effect: DashEffectComponent = $DashEffectComponent
 @onready var launch_effect: LaunchEffectComponent = $LaunchEffectComponent
@@ -27,6 +28,12 @@ func _ready() -> void:
 	normal_sprite_scale = player_sprite.scale
 
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
+	
+	health_c.start()
+	
+func _process(delta: float) -> void:
+	health_c.update(delta)
+	health_c.isDashing = dash_c.active
 
 
 func _physics_process(delta: float) -> void:

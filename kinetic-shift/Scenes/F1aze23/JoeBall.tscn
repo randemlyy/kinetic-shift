@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dg3l4sqbebyhu"]
+
+[ext_resource type="Script" uid="uid://bvw8qkrgaen6k" path="res://Scripts/F1aze23/joeBall.gd" id="1_814mp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_yib3f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vcip2"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_814mp"]
+radius = 8.0
+
+[node name="JoeBall" type="CharacterBody2D" unique_id=5701442 groups=["Enemy"]]
+script = ExtResource("1_814mp")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1771870762]
+position = Vector2(1.7881393e-07, 1.5497208e-06)
+scale = Vector2(14.015876, 14.000003)
+mesh = SubResource("SphereMesh_yib3f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1611126855]
+shape = SubResource("CircleShape2D_vcip2")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1123080717]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=313453870]
+shape = SubResource("CircleShape2D_814mp")
+
+[connection signal="body_entered" from="Area2D" to="." method="attackAreaEntered"]

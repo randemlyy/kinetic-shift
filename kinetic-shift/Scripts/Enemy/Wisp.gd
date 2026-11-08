@@ -61,9 +61,11 @@ func _update_chase() -> void:
 		player = null
 		_change_state(State.IDLE)
 		velocity = Vector2.ZERO
-		return	
+		return
 	animated_sprite.flip_h = not (player.global_position.x < global_position.x)
 	velocity = global_position.direction_to(player.global_position) * chase_speed
+	if global_position.distance_to(player.global_position) < 10:
+		player.get_node("HealthComponent").damage(10, self)
 
 func _change_state(next_state: State) -> void:
 	if state == next_state:

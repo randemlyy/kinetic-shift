@@ -13,6 +13,7 @@ var dash_ready = true
 var direction = Vector2.RIGHT
 var time_left = 0.0
 var distance_left = 0.0
+var dashMultiplier = 1
 
 func refresh() -> void:
 	dash_ready = true
@@ -39,7 +40,7 @@ func velocity_for_frame(delta: float) -> Vector2:
 	if frame_time <= 0.0:
 		return Vector2.ZERO
 
-	return direction * (distance_left/frame_time)
+	return direction * (distance_left/frame_time) * dashMultiplier
 
 
 func advance(delta: float) -> void:
