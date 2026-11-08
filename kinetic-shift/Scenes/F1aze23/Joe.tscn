@@ -2,8 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c5txigfhmd1ti" path="res://Scripts/F1aze23/joe.gd" id="1_00yg5"]
 [ext_resource type="PackedScene" uid="uid://dg3l4sqbebyhu" path="res://Scenes/F1aze23/JoeBall.tscn" id="2_g2xpl"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_g2xpl"]
+[ext_resource type="Texture2D" uid="uid://bg1ojps2y1arf" path="res://Assets/Sprites/Spritesheets/EyeSpriteSheet.png" id="3_122ev"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_122ev"]
 radius = 14.0
@@ -14,13 +13,14 @@ collision_mask = 0
 script = ExtResource("1_00yg5")
 joeBall = ExtResource("2_g2xpl")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1682768980]
-position = Vector2(-4.7683716e-07, 1.0728836e-06)
-scale = Vector2(28.031752, 28.000006)
-mesh = SubResource("SphereMesh_g2xpl")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1154881122]
 shape = SubResource("CircleShape2D_122ev")
 
 [node name="BallSpawn" type="Marker2D" parent="." unique_id=1610463863]
 position = Vector2(20, 0)
+
+[node name="EyeSprite" type="Sprite2D" parent="." unique_id=172599100]
+scale = Vector2(3, 3)
+texture = ExtResource("3_122ev")
+hframes = 8
+vframes = 8
