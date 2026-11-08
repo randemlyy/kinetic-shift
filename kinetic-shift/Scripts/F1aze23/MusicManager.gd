@@ -1,0 +1,31 @@
+extends Node
+
+var music_tracks: Dictionary = {
+	"MainMenu.tscn" : preload("res://Assets/Music/ionevenknow.mp3")
+}
+
+var audioP: AudioStreamPlayer
+var cTrackPath: String = ""
+
+func _ready() -> void:
+	audioP = AudioStreamPlayer.new()
+	add_child(audioP)
+	
+	get_tree().scene_changed.connect(_on_scene_changed)
+	
+	PlayMusic(get_tree().current_scene)
+
+func _on_scene_changed(new_scene: Node) -> void:
+	PlayMusic(new_scene)
+
+func PlayMusic(scene: Node) -> void:
+	if not scene:
+		return
+		
+	var sceneFile = scene.scene_file_path.get_file()
+	
+	if music_tracks.has(sceneFile):
+		var targetStream = music_tracks[sceneFile]
+		if audioP.stream != targetStream:
+			audioP.stream = targetStream
+			audioP.play()

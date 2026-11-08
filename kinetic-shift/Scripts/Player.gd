@@ -9,6 +9,7 @@ extends CharacterBody2D
 @onready var particle_c: ParticleComponent = $ParticleComponent
 @onready var hitstop_c: HitStopComponent = $HitStopComponent
 @onready var health_c: HealthComponent = $HealthComponent
+@onready var camera_c: CameraComponent = $CameraComponent
 
 @onready var dash_effect: DashEffectComponent = $DashEffectComponent
 @onready var launch_effect: LaunchEffectComponent = $LaunchEffectComponent
@@ -30,10 +31,12 @@ func _ready() -> void:
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 	
 	health_c.start()
+	camera_c.start()
 	
 func _process(delta: float) -> void:
 	health_c.update(delta)
 	health_c.isDashing = dash_c.active
+	camera_c.update()
 
 
 func _physics_process(delta: float) -> void:

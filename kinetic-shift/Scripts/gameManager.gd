@@ -1,3 +1,4 @@
+class_name GameManager
 extends Node
 
 @export var spawnpoint:Node2D
@@ -6,6 +7,8 @@ extends Node
 var paused:bool = false
 const PLAYER = preload("uid://c4x33uyjhsfud")
 var player
+
+const savePath = "user://saved_node.tscn"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = PLAYER.instantiate()
@@ -37,9 +40,29 @@ func _process(delta: float) -> void:
 
 func _on_player_death():
 	print ("player is ded")
-	dedscreen.visible = true
+	player.queue_free()
+	LoadNode()
+	#dedscreen.visible = true
 	#Engine.time_scale = lerp(1.0, 0.0, 0.5)
-	get_tree().paused = true
+	#get_tree().paused = true
 	#get_tree().reload_current_scene()
 	pass
 	
+	
+func SaveNode(node:Node):
+	var packed = PackedScene.new()
+	packed.pack(node)
+	ResourceSaver.save(packed, savePath)
+	
+func LoadNode():
+	var packed = load(savePath) as PackedScene
+	if packed:
+		var loaded = packed.instantiate()
+		player = loaded
+		player.get_node("HealthComponent").connect("Death", _on_player_death)
+		add_child(loaded)
+
+func SetOwnerRecursive(root: Node, current_node: Node) -> void:
+	for child in current_node.get_children():
+		child.owner = root
+		SetOwnerRecursive(root, child)
