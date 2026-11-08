@@ -1,7 +1,7 @@
 class_name HitStopComponent
 extends Node
 
-@export_range(0.1, 0.15, 0.005) var duration = 0.06
+@export_range(0.1, 0.30, 0.005) var duration = 0.06
 
 var _active = false
 var _request_id = 0

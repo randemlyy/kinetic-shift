@@ -144,7 +144,7 @@ script = ExtResource("6_nn08x")
 
 [node name="HitStopComponent" type="Node" parent="." unique_id=1394426508]
 script = ExtResource("7_52ee3")
-duration = 0.1
+duration = 0.15000000000000002
 
 [node name="DashEffectComponent" type="Node" parent="." unique_id=1684716936]
 script = ExtResource("8_bhhdu")
