@@ -13,22 +13,22 @@ enum SurfaceType {
 @export_group("Hold Duration")
 
 @export_range(0.1, 5.0, 0.1)
-var side_wall_duration: float = 1.6
+var side_wall_duration: float = 2.0
 
 @export_range(0.1, 5.0, 0.05)
-var ceiling_duration: float = 0.65
+var ceiling_duration: float = 1.2
 
 
 @export_group("Movement")
 
-@export var cling_force: float = 80.0
+@export var cling_force: float = 180.0
 
 
 @export_group("Jump")
 
-@export var wall_jump_away_speed: float = 420.0
-@export var wall_jump_up_speed: float = 600.0
-@export var ceiling_detach_speed: float = 350.0
+@export var wall_jump_away_speed: float = 520.0
+@export var wall_jump_up_speed: float = 720.0
+@export var ceiling_detach_speed: float = 540.0
 @export var jump_grace_time := 0.2
 
 @export_group("Detection and Visuals")
