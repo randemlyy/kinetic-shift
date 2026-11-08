@@ -334,3 +334,9 @@ func _update_animation() -> void:
 	if animation_player.current_animation != anim or not animation_player.is_playing():
 
 		animation_player.play(anim)
+		
+
+
+func _on_health_component_death() -> void:
+#	self.process_mode = Node.PROCESS_MODE_DISABLED
+	pass # Replace with function body.

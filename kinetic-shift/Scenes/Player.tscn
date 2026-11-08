@@ -104,6 +104,7 @@ size = Vector2(20, 30)
 viewport_path = NodePath("HealthSprite/SubViewport")
 
 [node name="Player" type="CharacterBody2D" unique_id=464782827 groups=["Player"]]
+process_mode = 1
 script = ExtResource("1_kyqiw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=234362877]
@@ -167,8 +168,6 @@ shape = SubResource("RectangleShape2D_glx4g")
 
 [node name="WallClingComponent" type="Node" parent="." unique_id=953361937]
 script = ExtResource("13_miouo")
-surface_normal_threshold = 0.8
-rotation_speed = 18.0
 
 [node name="HealthComponent" type="Node" parent="." unique_id=412437869 node_paths=PackedStringArray("healthBar")]
 script = ExtResource("14_o3h8g")
@@ -192,3 +191,5 @@ offset_right = -50.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[connection signal="Death" from="HealthComponent" to="." method="_on_health_component_death"]

@@ -2,11 +2,13 @@ class_name HealthComponent
 extends Node
 
 var health:int
-var maxHealth = 100
+var maxHealth = 2
 @export var healthBar:ProgressBar
 var hurt = []
 var isDashing
 var damageMultiplier = 1.0
+
+signal Death
 
 func start():
 	health = maxHealth
@@ -18,8 +20,11 @@ func update(delta:float):
 		healthBar.value = health
 	if health <= 0:
 		health = 0
+		Death.emit()
 	elif health >= 100:
 		health = 100
+		
+	
 	
 func damage(amt:float, node:Node):
 	if hurt.has(node):
@@ -31,5 +36,3 @@ func damage(amt:float, node:Node):
 	if hurt.has(node):
 		hurt.erase(node)
 	print(health, node, amt)
-
-	

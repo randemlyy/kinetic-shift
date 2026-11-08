@@ -43,6 +43,7 @@ animations = [{
 [node name="Drone" type="CharacterBody2D" unique_id=1400896138]
 scale = Vector2(2, 2)
 script = ExtResource("1_drone")
+chase_speed = 40.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1430083641]
 position = Vector2(1, 1)
