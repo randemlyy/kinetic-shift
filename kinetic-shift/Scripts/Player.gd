@@ -20,7 +20,7 @@ var normal_sprite_scale := Vector2.ONE
 var dash_visual_weight := 0.0
 var normal_sprite_flip_h := false
 var dead = false
-
+var cling_input_queued = true
 
 func _ready() -> void:
 	dash_c.hitbox = $DashHitbox
@@ -38,11 +38,15 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 
-	wall_cling_c.update(delta)
+	input_c.update_input()
+	movement_c.update_jump_buffer(delta, input_c.jump_pressed)
+
+	if input_c.jump_released:
+		cling_input_queued = true
+
+	wall_cling_c.update(delta, input_c.jump_held)
 
 	var was_on_floor = is_on_floor()
-
-	input_c.update_input()
 
 	var wall_jump_started := false
 
@@ -53,6 +57,7 @@ func _physics_process(delta: float) -> void:
 			var dash_direction := wall_cling_c.get_dash_direction(input_c.move_dir)
 
 			wall_cling_c.release()
+			cling_input_queued = false
 
 			normal_sprite_flip_h = player_sprite.flip_h
 
@@ -62,9 +67,9 @@ func _physics_process(delta: float) -> void:
 
 		elif input_c.jump_pressed:
 
-			wall_cling_c.jump_off(self)
-
-			wall_jump_started = true
+			wall_jump_started = wall_cling_c.jump_off(self)
+			cling_input_queued = false
+			movement_c.jump_buffer_left = 0.0
 
 	
 		else:
@@ -102,9 +107,38 @@ func _physics_process(delta: float) -> void:
 
 			particle_c.play_dash(dash_c.direction)
 
+	# A fresh Jump press after letting go can jump away from the saved surface.
+	if (
+		not wall_jump_started
+		and not wall_cling_c.active
+		and not dash_c.active
+		and not launch_c.active
+		and input_c.jump_pressed
+	):
+		wall_jump_started = wall_cling_c.jump_off(self)
+		if wall_jump_started:
+			cling_input_queued = false
+			movement_c.jump_buffer_left = 0.0
+
+	# Check existing wall contact before movement, so a cling press wins over a coyote jump.
+	if (
+		not is_on_floor()
+		and not wall_cling_c.active
+		and not dash_c.active
+		and not launch_c.active
+	):
+		if wall_cling_c.try_start(
+			self,
+			input_c.jump_held and cling_input_queued
+		):
+			movement_c.jump_buffer_left = 0.0
 
 
-	if dash_c.active:
+
+	if wall_cling_c.active:
+		velocity = wall_cling_c.get_cling_velocity(movement_c.speed)
+
+	elif dash_c.active:
 
 		velocity = dash_c.velocity_for_frame(delta)
 
@@ -122,12 +156,16 @@ func _physics_process(delta: float) -> void:
 	else:
 
 		movement_c.tick(self, delta, input_c)
+		if movement_c.jumped_this_frame:
+			cling_input_queued = false
 
 
 	var landing_speed = maxf(velocity.y, 0.0)
 
 	move_and_slide()
 
+	if wall_cling_c.active:
+		wall_cling_c.maintain_contact(self)
 
 	# Landing particles.
 	if not was_on_floor and is_on_floor():
@@ -160,15 +198,7 @@ func _physics_process(delta: float) -> void:
 			dash_c.refresh()
 
 		elif dash_c.active:
-
-			
-			if wall_cling_c.try_start(self):
-
-				dash_c.finish()
-
-			else:
-
-				dash_c.advance(delta)
+			dash_c.advance(delta)
 
 		else:
 
@@ -178,7 +208,11 @@ func _physics_process(delta: float) -> void:
 
 	elif not launch_c.active:
 
-		wall_cling_c.try_start(self)
+		if wall_cling_c.try_start(
+			self,
+			input_c.jump_held and cling_input_queued
+		):
+			movement_c.jump_buffer_left = 0.0
 
 
 

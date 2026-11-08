@@ -167,8 +167,8 @@ shape = SubResource("RectangleShape2D_glx4g")
 
 [node name="WallClingComponent" type="Node" parent="." unique_id=953361937]
 script = ExtResource("13_miouo")
-surface_normal_threshold = null
-rotation_speed = null
+surface_normal_threshold = 0.8
+rotation_speed = 18.0
 
 [node name="HealthComponent" type="Node" parent="." unique_id=412437869 node_paths=PackedStringArray("healthBar")]
 script = ExtResource("14_o3h8g")

@@ -29,7 +29,7 @@ var ceiling_duration: float = 0.65
 @export var wall_jump_away_speed: float = 420.0
 @export var wall_jump_up_speed: float = 600.0
 @export var ceiling_detach_speed: float = 350.0
-
+@export var jump_grace_time := 0.2
 
 @export_group("Detection and Visuals")
 
@@ -48,35 +48,37 @@ var target_rotation := 0.0
 var visual_rotation := 0.0
 
 var contact_locked := false
+var timed_out := false
+var jump_grace_left := 0.0
 
-func update(delta: float) -> void:
+var jump_surface_type: SurfaceType = SurfaceType.NONE
+var jump_surface_normal := Vector2.ZERO
 
+func update(delta: float, cling_held: bool) -> void:
+	var just_ended = false
 	
 	if active:
+		if not cling_held:
+			_end_cling(true)
+			timed_out = false
+			contact_locked = false
+			just_ended = true
 
-		var moving_on_surface := false
-
-		if surface_type == SurfaceType.SIDE_WALL:
-
-			moving_on_surface = (
-				Input.is_action_pressed("move_up")
-				or Input.is_action_pressed("move_down")
-			)
-
-		elif surface_type == SurfaceType.CEILING:
-
-			moving_on_surface = (
-				Input.is_action_pressed("move_left")
-				or Input.is_action_pressed("move_right")
-			)
-
-	
-		if not moving_on_surface:
-
-			time_left = maxf(time_left - delta, 0.0)
-
+		else:
+			time_left -= delta
 			if time_left <= 0.0:
-				release()
+				_end_cling(false)
+				timed_out = true
+				just_ended = true
+
+	elif timed_out and not cling_held:
+		timed_out = false
+		contact_locked = false
+		jump_grace_left = jump_grace_time
+		just_ended = true
+
+	if not active and not just_ended:
+		jump_grace_left = maxf(jump_grace_left - delta, 0.0)
 
 
 	var desired_rotation := target_rotation if active else 0.0
@@ -93,9 +95,9 @@ func update(delta: float) -> void:
 
 
 
-func try_start(body: CharacterBody2D) -> bool:
+func try_start(body: CharacterBody2D, cling_requested: bool) -> bool:
 
-	if active:
+	if not cling_requested or active or timed_out:
 		return false
 
 	var found_surface := false
@@ -196,30 +198,32 @@ func has_surface_contact(body: CharacterBody2D) -> bool:
 	return false
 
 
-func jump_off(body: CharacterBody2D) -> void:
+func jump_off(body: CharacterBody2D) -> bool:
 
-	if not active:
-		return
+	if active:
+		jump_surface_type = surface_type
+		jump_surface_normal = surface_normal
 
-	var previous_surface := surface_type
-	var previous_normal := surface_normal
+	elif jump_grace_left <= 0.0 or jump_surface_type == SurfaceType.NONE:
+		return false
+
+	var jump_type = jump_surface_type
+	var normal = jump_surface_normal
 
 	release()
 
-	if previous_surface == SurfaceType.SIDE_WALL:
+	jump_grace_left = 0.0
+	timed_out = true
+	jump_surface_type = SurfaceType.NONE
+	jump_surface_normal = Vector2.ZERO
 
+	if jump_type == SurfaceType.SIDE_WALL:
+		body.velocity = Vector2(normal.x * wall_jump_away_speed, -wall_jump_up_speed)
 	
-		body.velocity = Vector2(
-			previous_normal.x * wall_jump_away_speed,
-			-wall_jump_up_speed
-		)
+	elif jump_type == SurfaceType.CEILING:
+		body.velocity = normal * ceiling_detach_speed
 
-	elif previous_surface == SurfaceType.CEILING:
-
-		
-		body.velocity = previous_normal * ceiling_detach_speed
-
-
+	return true
 
 func get_dash_direction(input_direction: Vector2) -> Vector2:
 
@@ -248,3 +252,16 @@ func release() -> void:
 	time_left = 0.0
 	target_rotation = 0.0
 	surface_type = SurfaceType.NONE
+	contact_locked = false
+	jump_grace_left = 0.0
+
+func _end_cling(allow_jump: bool) -> void:
+	jump_surface_type = surface_type
+	jump_surface_normal = surface_normal
+	active = false
+	time_left = 0.0
+	target_rotation = 0.0
+	surface_type = SurfaceType.NONE
+
+	if allow_jump:
+		jump_grace_left = jump_grace_time
