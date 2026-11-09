@@ -9,13 +9,24 @@ offset_bottom = 107.0
 script = ExtResource("1_73sl5")
 
 [node name="Button" type="Button" parent="." unique_id=1981808576]
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(80, 100)
 layout_mode = 2
 theme = ExtResource("2_wc8aa")
 text = "Scene"
 
-[node name="Label" type="Label" parent="." unique_id=648126147]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=311620556]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=648126147]
 layout_mode = 2
 text = "Personal Best"
+
+[node name="Label3" type="Label" parent="HBoxContainer" unique_id=1075706139]
+layout_mode = 2
+text = "|"
+
+[node name="Label2" type="Label" parent="HBoxContainer" unique_id=1318263017]
+layout_mode = 2
+text = "Kill Count"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

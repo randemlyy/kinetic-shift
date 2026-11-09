@@ -16,8 +16,7 @@ func attackAreaEntered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		var debuff = DebuffComponent.new()
 		body.add_child(debuff)
-		debuff.debuff(body, randi_range(1,4))
-		body.get_node("HealthComponent").damage(5, self)
+		debuff.debuff(body, randi_range(1,3))
 	if !body.is_in_group("Enemy"):
 		print(body.name)
 		queue_free()

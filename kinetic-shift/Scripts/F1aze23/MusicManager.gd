@@ -1,7 +1,10 @@
 extends Node
 
 var music_tracks: Dictionary = {
-	"MainMenu.tscn" : preload("res://Assets/Music/ionevenknow.mp3")
+	"MainMenu.tscn" : preload("res://Assets/Music/ionevenknow.mp3"),
+	"LevelSelector.tscn" : preload("res://Assets/Music/idontlikenamingthings.mp3"),
+	"TestLevel2.tscn" : preload("res://Assets/Music/ionevenknow-v2.mp3"),
+	"GameOver.tscn" : preload("res://Assets/Music/ionevenknow.mp3")
 }
 
 var audioP: AudioStreamPlayer
@@ -15,8 +18,8 @@ func _ready() -> void:
 	
 	PlayMusic(get_tree().current_scene)
 
-func _on_scene_changed(new_scene: Node) -> void:
-	PlayMusic(new_scene)
+func _on_scene_changed() -> void:
+	PlayMusic(get_tree().current_scene)
 
 func PlayMusic(scene: Node) -> void:
 	if not scene:

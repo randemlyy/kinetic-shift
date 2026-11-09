@@ -11,14 +11,13 @@ config_version=5
 [application]
 
 config/name="kinetic-shift"
-run/main_scene="uid://blys1hyoqisdj"
+run/main_scene="uid://nvfl51hv2svv"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 MusicManager="*uid://blvyn2ckku8f8"
-SaveManager="*uid://d2vr57326rgdd"
 GameManager="*uid://cryqhbt8vcwfw"
 
 [editor_plugins]

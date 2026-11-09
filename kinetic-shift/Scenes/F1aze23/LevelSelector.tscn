@@ -44,14 +44,11 @@ text = "SELECT LEVEL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=711252404]
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer" unique_id=727117421]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer" unique_id=727117421]
 layout_mode = 2
 columns = 5
 
-[node name="LevelSelectButton" parent="VBoxContainer/ScrollContainer/GridContainer" unique_id=67835025 instance=ExtResource("3_3oqk2")]
+[node name="LevelSelectButton" parent="VBoxContainer/GridContainer" unique_id=67835025 instance=ExtResource("3_3oqk2")]
 layout_mode = 2
 sceneName = "TestLevel2.tscn"
 scenePath = "res://Scenes/TestLevel2.tscn"

@@ -14,7 +14,6 @@ var direction = Vector2.RIGHT
 var time_left = 0.0
 var distance_left = 0.0
 var dashMultiplier = 1
-
 func refresh() -> void:
 	dash_ready = true
 
@@ -63,11 +62,15 @@ func tick_hit_window(delta: float) -> void:
 func find_enemy() -> PhysicsBody2D:
 	if (not active and hit_window_left <= 0.0) or hitbox == null:
 		return null
+	
+	hitbox.monitoring = true
 
 	for body in hitbox.get_overlapping_bodies():
 		if body.is_in_group("Enemy") and body is PhysicsBody2D:
 			return body as PhysicsBody2D
+	hitbox.monitoring = false
 	return null
+	
 
 func finish(keep_hit_window: bool = false) -> void:
 	active = false

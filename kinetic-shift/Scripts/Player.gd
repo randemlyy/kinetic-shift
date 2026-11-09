@@ -30,11 +30,12 @@ func _ready() -> void:
 
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 	
-	health_c.start()
 	camera_c.start()
 	
+	
+	GameManager.SaveNode(self)
+	
 func _process(delta: float) -> void:
-	health_c.update(delta)
 	health_c.isDashing = dash_c.active
 	camera_c.update()
 
