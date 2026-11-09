@@ -9,9 +9,10 @@ offset_bottom = 107.0
 script = ExtResource("1_73sl5")
 
 [node name="Button" type="Button" parent="." unique_id=1981808576]
-custom_minimum_size = Vector2(80, 100)
+custom_minimum_size = Vector2(250, 100)
 layout_mode = 2
 theme = ExtResource("2_wc8aa")
+theme_override_font_sizes/font_size = 27
 text = "Scene"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=311620556]

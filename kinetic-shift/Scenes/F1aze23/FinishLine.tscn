@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bwxvrhox8qa18"]
+
+[ext_resource type="Script" uid="uid://bedrytn40e0v4" path="res://Scripts/finish_zone.gd" id="1_bratj"]
+[ext_resource type="Theme" uid="uid://cgqh0nuty53og" path="res://addons/pixel_ui_scifi/themes/cyan.tres" id="2_rg60f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rg60f"]
+size = Vector2(160, 160)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gigyv"]
+size = Vector3(160, 160, 160)
+
+[node name="FinishLine" type="Node2D" unique_id=1756915586 groups=["FinishLine"]]
+script = ExtResource("1_bratj")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=79696246]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=932366580]
+shape = SubResource("RectangleShape2D_rg60f")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1441449726]
+modulate = Color(1, 1, 1, 0.28627452)
+mesh = SubResource("BoxMesh_gigyv")
+
+[node name="Label" type="Label" parent="." unique_id=460566887]
+offset_left = -105.0
+offset_top = -116.0
+offset_right = 106.0
+offset_bottom = -79.75
+theme = ExtResource("2_rg60f")
+theme_override_font_sizes/font_size = 29
+text = "FINISH LINE"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

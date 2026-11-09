@@ -34,10 +34,6 @@ func _ready() -> void:
 
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 
-	# Initialize health.
-	health_c.start()
-
-	# Initialize the camera.
 	camera_c.start()
 	voidLevel = global_position.y + 750
 
