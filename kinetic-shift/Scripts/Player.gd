@@ -23,24 +23,36 @@ var normal_sprite_flip_h := false
 var dead = false
 var cling_input_queued = true
 
+
 func _ready() -> void:
 	dash_c.hitbox = $DashHitbox
 	dash_c.hitbox.monitoring = false
+
 	normal_sprite_scale = player_sprite.scale
 
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
-	
+
+	# Initialize health.
+	health_c.start()
+
+	# Initialize the camera.
 	camera_c.start()
-	
-	
+
+	# Save the player for checkpoint respawning.
 	GameManager.SaveNode(self)
-	
+
+
 func _process(delta: float) -> void:
 	health_c.isDashing = dash_c.active
 	camera_c.update()
 
 
 func _physics_process(delta: float) -> void:
+	if dead:
+		return
+
+	# Update dash energy regeneration.
+	dash_c.update(delta)
 
 	input_c.update_input()
 	movement_c.update_jump_buffer(delta, input_c.jump_pressed)
@@ -71,11 +83,14 @@ func _physics_process(delta: float) -> void:
 
 		elif input_c.jump_pressed:
 
-			wall_jump_started = wall_cling_c.jump_off(self)
+			wall_jump_started = wall_cling_c.jump_off(
+				self,
+				movement_c
+			)
+
 			cling_input_queued = false
 			movement_c.jump_buffer_left = 0.0
 
-	
 		else:
 
 			velocity = wall_cling_c.get_cling_velocity(
@@ -83,7 +98,7 @@ func _physics_process(delta: float) -> void:
 				input_c.move_x,
 				input_c.move_y,
 				delta
-				)
+			)
 
 			move_and_slide()
 
@@ -100,12 +115,6 @@ func _physics_process(delta: float) -> void:
 	if not wall_cling_c.active and input_c.move_x != 0.0:
 		player_sprite.flip_h = input_c.move_x < 0.0
 
-
-	if is_on_floor() and not wall_cling_c.active:
-		dash_c.refresh()
-
-
-
 	if not wall_cling_c.active and not dash_c.active and not launch_c.active:
 
 		if input_c.dash_pressed and dash_c.can_start():
@@ -116,7 +125,6 @@ func _physics_process(delta: float) -> void:
 
 			particle_c.play_dash(dash_c.direction)
 
-
 	if (
 		not wall_jump_started
 		and not wall_cling_c.active
@@ -124,7 +132,11 @@ func _physics_process(delta: float) -> void:
 		and not launch_c.active
 		and input_c.jump_pressed
 	):
-		wall_jump_started = wall_cling_c.jump_off(self)
+		wall_jump_started = wall_cling_c.jump_off(
+			self,
+			movement_c
+		)
+
 		if wall_jump_started:
 			cling_input_queued = false
 			movement_c.jump_buffer_left = 0.0
@@ -141,15 +153,14 @@ func _physics_process(delta: float) -> void:
 		):
 			movement_c.jump_buffer_left = 0.0
 
-
-
 	if wall_cling_c.active:
+
 		velocity = wall_cling_c.get_cling_velocity(
 			movement_c.speed,
 			input_c.move_x,
 			input_c.move_y,
 			delta
-			)
+		)
 
 	elif dash_c.active:
 
@@ -158,20 +169,18 @@ func _physics_process(delta: float) -> void:
 	elif launch_c.active:
 
 		launch_c.tick(delta)
-
 		velocity = launch_c.current_velocity()
 
 	elif wall_jump_started:
 
-		
 		pass
 
 	else:
 
 		movement_c.tick(self, delta, input_c)
+
 		if movement_c.jumped_this_frame:
 			cling_input_queued = false
-
 
 	var landing_speed = maxf(velocity.y, 0.0)
 
@@ -181,11 +190,7 @@ func _physics_process(delta: float) -> void:
 		wall_cling_c.maintain_contact(self)
 
 	if not was_on_floor and is_on_floor():
-
 		particle_c.play_landing(Vector2(0.0, 20.0), landing_speed)
-
-
-
 
 	if dash_c.active or dash_c.hit_window_left > 0.0:
 
@@ -194,11 +199,8 @@ func _physics_process(delta: float) -> void:
 		if enemy != null:
 
 			if enemy.has_method("die"):
-
 				enemy.call("die")
-
 			else:
-
 				_disable_enemy_hitbox(enemy)
 
 			dash_c.finish()
@@ -207,16 +209,16 @@ func _physics_process(delta: float) -> void:
 
 			launch_c.start(dash_c.launch_direction(input_c.move_dir))
 
-			dash_c.refresh()
+			# Restore one charge for a successful dash kill.
+			dash_c.restore_charge(1)
 
 		elif dash_c.active:
+
 			dash_c.advance(delta)
 
 		else:
 
 			dash_c.tick_hit_window(delta)
-
-
 
 	elif not launch_c.active:
 
@@ -226,15 +228,10 @@ func _physics_process(delta: float) -> void:
 		):
 			movement_c.jump_buffer_left = 0.0
 
-
-
-
 	_update_dash_visual(delta)
-
 	_update_animation()
 
 	dash_effect.update_effect(delta, dash_c.active)
-
 	launch_effect.update_effect(delta, launch_c.active)
 
 
@@ -260,7 +257,6 @@ func _update_dash_visual(delta: float) -> void:
 
 		player_sprite.flip_h = input_c.move_x < 0.0 if input_c.move_x != 0.0 else normal_sprite_flip_h
 
-	
 	player_sprite.rotation = (
 		wall_cling_c.visual_rotation
 		+ dash_c.direction.angle() * dash_visual_weight
@@ -280,7 +276,6 @@ func _update_dash_visual(delta: float) -> void:
 func _disable_enemy_hitbox(enemy: PhysicsBody2D) -> void:
 
 	for shape in enemy.find_children("*", "CollisionShape2D", true, false):
-
 		(shape as CollisionShape2D).set_deferred("disabled", true)
 
 
@@ -289,7 +284,6 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if dead or not body.is_in_group("Enemy"):
 		return
 
-	
 	if dash_c.active and dash_c.find_enemy() == body:
 		return
 
@@ -297,8 +291,6 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 
 func die() -> void:
-
-
 	pass
 
 
@@ -307,45 +299,34 @@ func _update_animation() -> void:
 	if wall_cling_c.active:
 
 		if animation_player.current_animation != "Idle":
-
 			animation_player.play("Idle")
 
 		return
-
 
 	if dash_c.active or dash_visual_weight > 0.01:
 
 		if animation_player.current_animation != "Dash":
-
 			animation_player.play("Dash")
 
 		return
 
-
 	if not is_on_floor():
 
 		if animation_player.current_animation == "Dash":
-
 			animation_player.play("Idle")
-
 			animation_player.seek(0.0, true)
 
 		animation_player.pause()
 
 		return
 
-
 	var anim = "Idle"
 
 	if is_on_floor() and not dash_c.active and not launch_c.active and absf(velocity.x) > 5.0:
-
 		anim = "Walk"
 
-
 	if animation_player.current_animation != anim or not animation_player.is_playing():
-
 		animation_player.play(anim)
-		
 
 
 func _on_health_component_death() -> void:
@@ -357,13 +338,11 @@ func death() -> void:
 		return
 
 	dead = true
-
-	# Stop player movement and active abilities.
 	velocity = Vector2.ZERO
+
 	dash_c.finish()
 	wall_cling_c.release()
 
-	# Remove the player's camera before removing the player.
 	if is_instance_valid(camera_c) and is_instance_valid(camera_c.cam):
 		camera_c.cam.queue_free()
 

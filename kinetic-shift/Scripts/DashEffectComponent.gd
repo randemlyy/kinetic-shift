@@ -36,3 +36,4 @@ func _spawn() -> void:
 	fade_color.a = 0.0
 	var tween := ghost.create_tween()
 	tween.tween_property(ghost, "modulate", fade_color, lifetime)
+	tween.tween_callback(ghost.queue_free)
