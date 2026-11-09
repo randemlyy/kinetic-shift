@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cucweo55gtvnp" path="res://Scenes/F1aze23/Joe.tscn" id="3_ehjmi"]
 [ext_resource type="Script" uid="uid://cryqhbt8vcwfw" path="res://Scripts/gameManager.gd" id="4_p4u3k"]
 [ext_resource type="Script" uid="uid://b6tpdv7epg5d6" path="res://Scripts/ded_screen.gd" id="5_70df5"]
+[ext_resource type="PackedScene" uid="uid://dtfdj22vw6hd3" path="res://Scenes/F1aze23/Lantern.tscn" id="6_jriq2"]
+[ext_resource type="PackedScene" uid="uid://c4x33uyjhsfud" path="res://Scenes/Player.tscn" id="7_ehjmi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oy2kj"]
 texture = ExtResource("2_jriq2")
@@ -71,12 +73,9 @@ tile_set = SubResource("TileSet_sa0i8")
 position = Vector2(4617, 237)
 scale = Vector2(2, 2)
 
-[node name="GameManager" type="Node" parent="." unique_id=1287108600 node_paths=PackedStringArray("spawnpoint", "dedscreen", "pausescreen")]
+[node name="GameManager" type="Node" parent="." unique_id=1287108600]
 process_mode = 3
 script = ExtResource("4_p4u3k")
-spawnpoint = NodePath("../PlayerSpawnPoint")
-dedscreen = NodePath("CanvasLayer/DedScreen")
-pausescreen = NodePath("CanvasLayer/PauseScreen")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GameManager" unique_id=775569126]
 
@@ -131,3 +130,21 @@ label_settings = SubResource("LabelSettings_cpbsq")
 
 [node name="PlayerSpawnPoint" type="Node2D" parent="." unique_id=1360950901]
 position = Vector2(-40, 508)
+
+[node name="Lantern" parent="." unique_id=1057265646 instance=ExtResource("6_jriq2")]
+position = Vector2(96, 504)
+
+[node name="Lantern2" parent="." unique_id=722975014 instance=ExtResource("6_jriq2")]
+position = Vector2(3886, 501)
+
+[node name="Lantern4" parent="." unique_id=75889436 instance=ExtResource("6_jriq2")]
+position = Vector2(4408, 376)
+
+[node name="Lantern5" parent="." unique_id=1534702213 instance=ExtResource("6_jriq2")]
+position = Vector2(4998, 356)
+
+[node name="Lantern3" parent="." unique_id=1679251049 instance=ExtResource("6_jriq2")]
+position = Vector2(2047, 495)
+
+[node name="Player" parent="." unique_id=464782827 instance=ExtResource("7_ehjmi")]
+position = Vector2(-8, 497)

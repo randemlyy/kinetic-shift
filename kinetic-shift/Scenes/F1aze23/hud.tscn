@@ -1,74 +1,242 @@
+
 [gd_scene format=3 uid="uid://buuseq3mg3v1"]
 
-[ext_resource type="Script" uid="uid://b6tpdv7epg5d6" path="res://Scripts/ded_screen.gd" id="1_xe7lh"]
+[ext_resource type="Theme" uid="uid://cgqh0nuty53og" path="res://addons/pixel_ui_scifi/themes/cyan.tres" id="1_xe7lh"]
+[ext_resource type="Script" uid="uid://b4w6a3ioji416" path="res://Scripts/F1aze23/PauseScreen.gd" id="2_arp4d"]
 [ext_resource type="Script" uid="uid://cka82v68fsw7p" path="res://Scripts/timer.gd" id="2_s0xbc"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_cpbsq"]
-font_size = 32
+[sub_resource type="StyleBoxFlat" id="DashBackground"]
+
+bg_color = Color(0.035, 0.07, 0.09, 0.9)
+
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+border_color = Color(0.1, 0.3, 0.34, 1)
+
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+
+[sub_resource type="StyleBoxFlat" id="DashFill"]
+
+bg_color = Color(0.15, 0.85, 0.85, 1)
+
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 
 [node name="HUD" type="CanvasLayer" unique_id=1729042396]
 
-[node name="DedScreen" type="Control" parent="." unique_id=2064604338]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("1_xe7lh")
-
-[node name="Label" type="Label" parent="DedScreen" unique_id=808402016]
-layout_mode = 0
-offset_left = 446.0
-offset_top = 67.0
-offset_right = 561.0
-offset_bottom = 90.0
-text = "YOU ARE DEAD"
-label_settings = SubResource("LabelSettings_cpbsq")
-
-[node name="Label2" type="Label" parent="DedScreen" unique_id=753322602]
-layout_mode = 0
-offset_left = 412.0
-offset_top = 450.0
-offset_right = 749.0
-offset_bottom = 495.0
-text = "PRESS [R] TO RESTART"
-label_settings = SubResource("LabelSettings_cpbsq")
 
 [node name="PauseScreen" type="Control" parent="." unique_id=976600546]
-visible = false
+
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="Label2" type="ColorRect" parent="PauseScreen" unique_id=1437078645]
-layout_mode = 0
-offset_right = 337.0
-offset_bottom = 45.0
-scale = Vector2(3.5760179, 15.740777)
-color = Color(0, 0, 0, 0.34117648)
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Label" type="Label" parent="PauseScreen" unique_id=360253481]
-layout_mode = 0
-offset_left = 510.0
-offset_top = 67.0
-offset_right = 634.0
-offset_bottom = 112.0
-text = "PAUSED"
-label_settings = SubResource("LabelSettings_cpbsq")
+theme = ExtResource("1_xe7lh")
+script = ExtResource("2_arp4d")
 
-[node name="Timer" type="Control" parent="." unique_id=1561724500 node_paths=PackedStringArray("game_manager", "timer")]
+
+[node name="Panel" type="Panel" parent="PauseScreen" unique_id=2085281211]
+
+modulate = Color(1, 1, 1, 0.35686275)
+
+layout_mode = 1
+anchors_preset = 15
+
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+grow_horizontal = 2
+grow_vertical = 2
+
+theme = ExtResource("1_xe7lh")
+
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseScreen" unique_id=894347756]
+
+layout_mode = 1
+anchors_preset = 8
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+grow_horizontal = 2
+grow_vertical = 2
+
+
+[node name="Label" type="Label" parent="PauseScreen/VBoxContainer" unique_id=1554984412]
+
+layout_mode = 2
+
+theme_override_font_sizes/font_size = 63
+
+text = "Paused"
+
+horizontal_alignment = 1
+vertical_alignment = 1
+
+
+[node name="Control" type="Control" parent="PauseScreen/VBoxContainer" unique_id=1607506631]
+
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+
+[node name="Button" type="Button" parent="PauseScreen/VBoxContainer" unique_id=109027283]
+
+layout_mode = 2
+
+theme_override_font_sizes/font_size = 60
+
+text = "Main Menu"
+
+
+[node name="Timer" type="Control" parent="." unique_id=1561724500 node_paths=PackedStringArray("timer")]
+
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+grow_horizontal = 2
+grow_vertical = 2
+
+theme = ExtResource("1_xe7lh")
 script = ExtResource("2_s0xbc")
-game_manager = NodePath("")
+
 timer = NodePath("Label")
+
 metadata/_edit_use_anchors_ = true
+
 
 [node name="Label" type="Label" parent="Timer" unique_id=957030618]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+
+layout_mode = 1
+anchors_preset = 5
+
+anchor_left = 0.5
+anchor_right = 0.5
+
+offset_left = -20.0
+offset_top = 14.0
+offset_right = 20.0
+offset_bottom = 64.0
+
+grow_horizontal = 2
+
+theme = ExtResource("1_xe7lh")
+
+theme_override_font_sizes/font_size = 40
+
 metadata/_edit_use_anchors_ = true
+
+
+[node name="Label2" type="Label" parent="Timer" unique_id=1996799045]
+
+custom_minimum_size = Vector2(0, -14)
+
+layout_mode = 1
+anchors_preset = 7
+
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+
+offset_left = -20.0
+offset_top = -54.0
+offset_right = 20.0
+
+grow_horizontal = 2
+grow_vertical = 0
+
+theme_override_font_sizes/font_size = 42
+
+
+# DASH ENERGY METER
+
+[node name="DashMeter" type="HBoxContainer" parent="Timer"]
+
+layout_mode = 1
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+
+offset_left = 24.0
+offset_top = -70.0
+offset_right = 340.0
+offset_bottom = -28.0
+
+theme = ExtResource("1_xe7lh")
+
+theme_override_constants/separation = 8
+
+
+[node name="DashLabel" type="Label" parent="Timer/DashMeter"]
+
+custom_minimum_size = Vector2(55, 0)
+
+layout_mode = 2
+
+text = "DASH"
+
+theme_override_font_sizes/font_size = 18
+
+vertical_alignment = 1
+
+
+[node name="DashBar" type="ProgressBar" parent="Timer/DashMeter"]
+
+custom_minimum_size = Vector2(190, 22)
+
+layout_mode = 2
+
+min_value = 0.0
+max_value = 5.0
+step = 0.01
+value = 5.0
+
+show_percentage = false
+
+theme_override_styles/background = SubResource("DashBackground")
+theme_override_styles/fill = SubResource("DashFill")
+
+
+[node name="DashCount" type="Label" parent="Timer/DashMeter"]
+
+custom_minimum_size = Vector2(50, 0)
+
+layout_mode = 2
+
+text = "5 / 5"
+
+theme_override_font_sizes/font_size = 18
+
+horizontal_alignment = 1
+vertical_alignment = 1
+
+
+[connection signal="pressed" from="PauseScreen/VBoxContainer/Button" to="PauseScreen" method="_on_button_pressed"]

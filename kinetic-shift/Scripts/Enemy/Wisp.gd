@@ -32,7 +32,7 @@ func _ready() -> void:
 	col_shape.shape = circle
 
 	animated_sprite.animation_finished.connect(_on_animation_finished)
-	animated_sprite.play("idle")
+	animated_sprite.play("Idle")
 
 	detection_area.body_entered.connect(_on_body_entered)
 	detection_area.body_exited.connect(_on_body_exited)
