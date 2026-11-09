@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://bkisd045gvw4c"]
+
+[ext_resource type="Theme" uid="uid://cgqh0nuty53og" path="res://addons/pixel_ui_scifi/themes/cyan.tres" id="1_21ohw"]
+[ext_resource type="Script" uid="uid://ddq7sscl580xa" path="res://Scripts/F1aze23/LevelSelector.gd" id="2_urqt3"]
+[ext_resource type="PackedScene" uid="uid://c6qm4d1iwe3un" path="res://Scenes/F1aze23/LevelSelectButton.tscn" id="3_3oqk2"]
+
+[node name="LevelSelector" type="Control" unique_id=1971340456]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_21ohw")
+script = ExtResource("2_urqt3")
+
+[node name="Panel" type="Panel" parent="." unique_id=814787928]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=79349185]
+custom_minimum_size = Vector2(1102, 598)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -267.0
+offset_right = 267.0
+offset_bottom = 107.0
+grow_horizontal = 2
+
+[node name="Control" type="Control" parent="VBoxContainer" unique_id=48919475]
+custom_minimum_size = Vector2(0, 23.68)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=446106753]
+layout_mode = 2
+theme_override_font_sizes/font_size = 61
+text = "SELECT LEVEL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=711252404]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer" unique_id=727117421]
+layout_mode = 2
+columns = 5
+
+[node name="LevelSelectButton" parent="VBoxContainer/ScrollContainer/GridContainer" unique_id=67835025 instance=ExtResource("3_3oqk2")]
+layout_mode = 2
+sceneName = "TestLevel2.tscn"
+scenePath = "res://Scenes/TestLevel2.tscn"

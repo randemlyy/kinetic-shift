@@ -17,7 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+MusicManager="*uid://blvyn2ckku8f8"
 SaveManager="*uid://d2vr57326rgdd"
+GameManager="*uid://cryqhbt8vcwfw"
 
 [editor_plugins]
 
@@ -27,6 +29,10 @@ enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
 Enemy=""
 Player=""
+startzone=""
+GameManager=""
+SpawnPoint=""
+FinishLine=""
 
 [input]
 

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c6qm4d1iwe3un"]
+
+[ext_resource type="Script" uid="uid://cj0gh0tr5awwg" path="res://Scripts/F1aze23/levelSelectButton.gd" id="1_73sl5"]
+[ext_resource type="Theme" uid="uid://cgqh0nuty53og" path="res://addons/pixel_ui_scifi/themes/cyan.tres" id="2_wc8aa"]
+
+[node name="LevelSelectButton" type="VBoxContainer" unique_id=67835025]
+offset_right = 106.0
+offset_bottom = 107.0
+script = ExtResource("1_73sl5")
+
+[node name="Button" type="Button" parent="." unique_id=1981808576]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme = ExtResource("2_wc8aa")
+text = "Scene"
+
+[node name="Label" type="Label" parent="." unique_id=648126147]
+layout_mode = 2
+text = "Personal Best"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

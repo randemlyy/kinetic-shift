@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dbkw0pokgcg2k"]
+
+[ext_resource type="Script" uid="uid://c3wkqy3d254oq" path="res://Scripts/F1aze23/camZone.gd" id="1_e7svg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_giyd1"]
+size = Vector2(1152, 648)
+
+[node name="CamZone" type="Area2D" unique_id=1888585402]
+script = ExtResource("1_e7svg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=807753593]
+shape = SubResource("RectangleShape2D_giyd1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
