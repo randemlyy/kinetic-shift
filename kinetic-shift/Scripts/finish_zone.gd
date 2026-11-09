@@ -5,5 +5,5 @@ extends Node2D
 signal PlayerFinished
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if GameManager.kills >= 2:
+	if GameManager.kills >= 5:
 		PlayerFinished.emit()

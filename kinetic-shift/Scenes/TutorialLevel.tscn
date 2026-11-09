@@ -95,12 +95,9 @@ scale = Vector2(2, 2)
 position = Vector2(7150, -350)
 scale = Vector2(2, 2)
 
-[node name="GameManager" type="Node" parent="." unique_id=1287108600 node_paths=PackedStringArray("spawnpoint", "dedscreen", "pausescreen")]
+[node name="GameManager" type="Node" parent="." unique_id=1287108600]
 process_mode = 3
 script = ExtResource("4_ntqk8")
-spawnpoint = NodePath("../PlayerSpawnPoint")
-dedscreen = NodePath("CanvasLayer/DedScreen")
-pausescreen = NodePath("CanvasLayer/PauseScreen")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GameManager" unique_id=775569126]
 

@@ -4,16 +4,14 @@ extends StaticBody2D
 @onready var eye_sprite: Sprite2D = $EyeSprite
 
 @export var joeBall:PackedScene
-@export var detection_range = 300.0
+@export var detection_range = 600.0
 @export var direction_frames: Array[int] = [8, 9, 10, 11, 12, 13, 14, 15]
 
 var canAttack := true
 var player: Node2D
-
-func _ready() -> void:
-	player = get_tree().get_first_node_in_group("Player")
-
 func _process(delta: float) -> void:
+	if player == null:
+		player = get_tree().get_first_node_in_group("Player")
 	if not is_instance_valid(player):
 		eye_sprite.frame = 0
 		return
@@ -46,6 +44,5 @@ func attack(offset : Vector2):
 	get_tree().root.add_child(ball)
 	ball.global_position = ballSpawn.global_position
 	ball.start(attackPos)
-	
 	await get_tree().create_timer(1).timeout
 	canAttack = true

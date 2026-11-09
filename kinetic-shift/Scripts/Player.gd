@@ -17,6 +17,8 @@ extends CharacterBody2D
 @onready var player_sprite: Sprite2D = $Sprite2D
 @onready var hurtbox: Area2D = $Hurtbox
 
+@export var voidLevel:float
+
 var normal_sprite_scale := Vector2.ONE
 var dash_visual_weight := 0.0
 var normal_sprite_flip_h := false
@@ -32,13 +34,17 @@ func _ready() -> void:
 	
 	camera_c.start()
 	
+	voidLevel = global_position.y + 750
+	
 	
 	GameManager.SaveNode(self)
 	
 func _process(delta: float) -> void:
 	health_c.isDashing = dash_c.active
 	camera_c.update()
-
+	
+	if global_position.y > voidLevel:
+		GameManager._on_player_death()
 
 func _physics_process(delta: float) -> void:
 

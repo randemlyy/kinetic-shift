@@ -18,5 +18,4 @@ func attackAreaEntered(body: Node2D) -> void:
 		body.add_child(debuff)
 		debuff.debuff(body, randi_range(1,3))
 	if !body.is_in_group("Enemy"):
-		print(body.name)
 		queue_free()

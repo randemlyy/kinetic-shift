@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://dgyn4g31q23oo"]
+[gd_scene format=4 uid="uid://cukw3thsvft02"]
 
 [ext_resource type="Script" uid="uid://cufc1v4ludwjo" path="res://Scripts/F1aze23/levelManager.gd" id="1_sn53d"]
 [ext_resource type="PackedScene" uid="uid://dtfdj22vw6hd3" path="res://Scenes/F1aze23/Lantern.tscn" id="2_yawug"]

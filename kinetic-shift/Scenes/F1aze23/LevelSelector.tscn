@@ -50,5 +50,16 @@ columns = 5
 
 [node name="LevelSelectButton" parent="VBoxContainer/GridContainer" unique_id=67835025 instance=ExtResource("3_3oqk2")]
 layout_mode = 2
-sceneName = "TestLevel2.tscn"
-scenePath = "res://Scenes/TestLevel2.tscn"
+sceneName = "TutorialLevel.tscn"
+
+[node name="LevelSelectButton2" parent="VBoxContainer/GridContainer" unique_id=1176408031 instance=ExtResource("3_3oqk2")]
+layout_mode = 2
+sceneName = "Level1.tscn"
+
+[node name="LevelSelectButton3" parent="VBoxContainer/GridContainer" unique_id=186187182 instance=ExtResource("3_3oqk2")]
+layout_mode = 2
+sceneName = "Level2.tscn"
+
+[node name="LevelSelectButton4" parent="VBoxContainer/GridContainer" unique_id=1559997842 instance=ExtResource("3_3oqk2")]
+layout_mode = 2
+sceneName = "Level3.tscn"

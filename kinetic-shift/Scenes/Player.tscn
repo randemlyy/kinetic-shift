@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://na48b13aakkg" path="res://Scripts/WallClingComponent.gd" id="13_miouo"]
 [ext_resource type="Script" uid="uid://bj1tru8xfwn35" path="res://Scripts/F1aze23/HealthComponent.gd" id="14_o3h8g"]
 [ext_resource type="Script" uid="uid://dhsnrxnk3g3ny" path="res://Scripts/F1aze23/CameraComponent.gd" id="15_1e7my"]
+[ext_resource type="Theme" uid="uid://cgqh0nuty53og" path="res://addons/pixel_ui_scifi/themes/cyan.tres" id="16_arntx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dewec"]
 size = Vector2(20, 30)
@@ -170,5 +171,17 @@ metadata/_custom_type_script = "uid://bj1tru8xfwn35"
 [node name="CameraComponent" type="Node" parent="." unique_id=492770765]
 script = ExtResource("15_1e7my")
 metadata/_custom_type_script = "uid://dhsnrxnk3g3ny"
+
+[node name="DebuffIndicator" type="Label" parent="." unique_id=1780368101]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -33.0
+offset_top = -48.0
+offset_right = 36.0
+offset_bottom = -16.75
+grow_horizontal = 2
+theme = ExtResource("16_arntx")
+theme_override_font_sizes/font_size = 15
 
 [connection signal="Death" from="HealthComponent" to="." method="_on_health_component_death"]

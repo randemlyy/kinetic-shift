@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://cosvgii34ptxm"]
 
 [ext_resource type="PackedScene" uid="uid://dtfdj22vw6hd3" path="res://Scenes/F1aze23/Lantern.tscn" id="1_f0rsf"]
-[ext_resource type="Script" uid="uid://cufc1v4ludwjo" path="res://Scripts/F1aze23/levelManager.gd" id="1_yvagw"]
 [ext_resource type="PackedScene" uid="uid://cn5dick7igwas" path="res://Scenes/Wisp.tscn" id="2_pgfg0"]
 [ext_resource type="Texture2D" uid="uid://c10m1ycq8a2qp" path="res://Assets/Sprites/Spritesheets/TileMap.png" id="3_mvott"]
 [ext_resource type="PackedScene" uid="uid://cucweo55gtvnp" path="res://Scenes/F1aze23/Joe.tscn" id="4_waj30"]
@@ -45,7 +44,6 @@ sources/0 = SubResource("TileSetAtlasSource_oy2kj")
 size = Vector2(430, 230)
 
 [node name="Node2D" type="Node2D" unique_id=1774890080]
-script = ExtResource("1_yvagw")
 
 [node name="Lantern" parent="." unique_id=1057265646 instance=ExtResource("1_f0rsf")]
 position = Vector2(-603, 561)

@@ -10,5 +10,5 @@ func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 func _on_reset_button_down() -> void:
-	# savemgr.clear_all_saves()
-	pass # Replace with function body.
+	if FileAccess.file_exists("user://save_data.tres"):
+		DirAccess.remove_absolute("user://save_data.tres")
