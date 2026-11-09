@@ -35,7 +35,7 @@ func _ready() -> void:
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 
 	camera_c.start()
-	voidLevel = global_position.y + 750
+	voidLevel = global_position.y + 1000
 
 	GameManager.SaveNode(self)
 
