@@ -343,3 +343,8 @@ func _update_animation() -> void:
 func _on_health_component_death() -> void:
 #	self.process_mode = Node.PROCESS_MODE_DISABLED
 	pass # Replace with function body.
+	
+	
+func death():
+	camera_c.cam.queue_free()
+	queue_free()

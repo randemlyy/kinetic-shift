@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://buuseq3mg3v1"]
+
+[ext_resource type="Script" uid="uid://b6tpdv7epg5d6" path="res://Scripts/ded_screen.gd" id="1_xe7lh"]
+[ext_resource type="Script" uid="uid://cka82v68fsw7p" path="res://Scripts/timer.gd" id="2_s0xbc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cpbsq"]
+font_size = 32
+
+[node name="HUD" type="CanvasLayer" unique_id=1729042396]
+
+[node name="DedScreen" type="Control" parent="." unique_id=2064604338]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_xe7lh")
+
+[node name="Label" type="Label" parent="DedScreen" unique_id=808402016]
+layout_mode = 0
+offset_left = 446.0
+offset_top = 67.0
+offset_right = 561.0
+offset_bottom = 90.0
+text = "YOU ARE DEAD"
+label_settings = SubResource("LabelSettings_cpbsq")
+
+[node name="Label2" type="Label" parent="DedScreen" unique_id=753322602]
+layout_mode = 0
+offset_left = 412.0
+offset_top = 450.0
+offset_right = 749.0
+offset_bottom = 495.0
+text = "PRESS [R] TO RESTART"
+label_settings = SubResource("LabelSettings_cpbsq")
+
+[node name="PauseScreen" type="Control" parent="." unique_id=976600546]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label2" type="ColorRect" parent="PauseScreen" unique_id=1437078645]
+layout_mode = 0
+offset_right = 337.0
+offset_bottom = 45.0
+scale = Vector2(3.5760179, 15.740777)
+color = Color(0, 0, 0, 0.34117648)
+
+[node name="Label" type="Label" parent="PauseScreen" unique_id=360253481]
+layout_mode = 0
+offset_left = 510.0
+offset_top = 67.0
+offset_right = 634.0
+offset_bottom = 112.0
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_cpbsq")
+
+[node name="Timer" type="Control" parent="." unique_id=1561724500 node_paths=PackedStringArray("game_manager", "timer")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_s0xbc")
+game_manager = NodePath("")
+timer = NodePath("Label")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Timer" unique_id=957030618]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true

@@ -125,10 +125,6 @@ texture = ExtResource("2_glx4g")
 hframes = 8
 vframes = 8
 
-[node name="CameraComponent" type="Node" parent="." unique_id=492770765]
-script = ExtResource("15_1e7my")
-metadata/_custom_type_script = "uid://dhsnrxnk3g3ny"
-
 [node name="MovementComponent" type="Node" parent="." unique_id=1741160042]
 script = ExtResource("2_gntrk")
 
@@ -145,7 +141,7 @@ script = ExtResource("6_nn08x")
 
 [node name="HitStopComponent" type="Node" parent="." unique_id=1394426508]
 script = ExtResource("7_52ee3")
-duration = 0.1
+duration = 0.15000000000000002
 
 [node name="DashEffectComponent" type="Node" parent="." unique_id=1684716936]
 script = ExtResource("8_bhhdu")
@@ -192,5 +188,9 @@ offset_right = -50.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CameraComponent" type="Node" parent="." unique_id=492770765]
+script = ExtResource("15_1e7my")
+metadata/_custom_type_script = "uid://dhsnrxnk3g3ny"
 
 [connection signal="Death" from="HealthComponent" to="." method="_on_health_component_death"]
