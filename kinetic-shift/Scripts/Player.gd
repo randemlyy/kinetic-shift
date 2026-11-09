@@ -78,7 +78,12 @@ func _physics_process(delta: float) -> void:
 	
 		else:
 
-			velocity = wall_cling_c.get_cling_velocity(movement_c.speed)
+			velocity = wall_cling_c.get_cling_velocity(
+				movement_c.speed,
+				input_c.move_x,
+				input_c.move_y,
+				delta
+				)
 
 			move_and_slide()
 
@@ -111,7 +116,7 @@ func _physics_process(delta: float) -> void:
 
 			particle_c.play_dash(dash_c.direction)
 
-	# A fresh Jump press after letting go can jump away from the saved surface.
+
 	if (
 		not wall_jump_started
 		and not wall_cling_c.active
@@ -124,7 +129,6 @@ func _physics_process(delta: float) -> void:
 			cling_input_queued = false
 			movement_c.jump_buffer_left = 0.0
 
-	# Check existing wall contact before movement, so a cling press wins over a coyote jump.
 	if (
 		not is_on_floor()
 		and not wall_cling_c.active
@@ -140,7 +144,12 @@ func _physics_process(delta: float) -> void:
 
 
 	if wall_cling_c.active:
-		velocity = wall_cling_c.get_cling_velocity(movement_c.speed)
+		velocity = wall_cling_c.get_cling_velocity(
+			movement_c.speed,
+			input_c.move_x,
+			input_c.move_y,
+			delta
+			)
 
 	elif dash_c.active:
 
@@ -171,7 +180,6 @@ func _physics_process(delta: float) -> void:
 	if wall_cling_c.active:
 		wall_cling_c.maintain_contact(self)
 
-	# Landing particles.
 	if not was_on_floor and is_on_floor():
 
 		particle_c.play_landing(Vector2(0.0, 20.0), landing_speed)
@@ -296,7 +304,6 @@ func die() -> void:
 
 func _update_animation() -> void:
 
-	# Maintain idle animation while clinging.
 	if wall_cling_c.active:
 
 		if animation_player.current_animation != "Idle":
@@ -342,10 +349,22 @@ func _update_animation() -> void:
 
 
 func _on_health_component_death() -> void:
-#	self.process_mode = Node.PROCESS_MODE_DISABLED
-	pass # Replace with function body.
-	
-	
-func death():
-	camera_c.cam.queue_free()
+	death()
+
+
+func death() -> void:
+	if dead:
+		return
+
+	dead = true
+
+	# Stop player movement and active abilities.
+	velocity = Vector2.ZERO
+	dash_c.finish()
+	wall_cling_c.release()
+
+	# Remove the player's camera before removing the player.
+	if is_instance_valid(camera_c) and is_instance_valid(camera_c.cam):
+		camera_c.cam.queue_free()
+
 	queue_free()
