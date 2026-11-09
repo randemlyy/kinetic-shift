@@ -20,7 +20,7 @@
 size = Vector2(20, 30)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
-radius = 20.0
+radius = 26.841776
 
 [sub_resource type="Animation" id="Animation_miouo"]
 resource_name = "Dash"
@@ -101,9 +101,6 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glx4g"]
 size = Vector2(20, 30)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_o3h8g"]
-viewport_path = NodePath("HealthSprite/SubViewport")
-
 [node name="Player" type="CharacterBody2D" unique_id=464782827 groups=["Player"]]
 process_mode = 1
 script = ExtResource("1_kyqiw")
@@ -166,28 +163,9 @@ shape = SubResource("RectangleShape2D_glx4g")
 [node name="WallClingComponent" type="Node" parent="." unique_id=953361937]
 script = ExtResource("13_miouo")
 
-[node name="HealthComponent" type="Node" parent="." unique_id=412437869 node_paths=PackedStringArray("healthBar")]
+[node name="HealthComponent" type="Node" parent="." unique_id=412437869]
 script = ExtResource("14_o3h8g")
-healthBar = NodePath("../HealthSprite/ProgressBar")
 metadata/_custom_type_script = "uid://bj1tru8xfwn35"
-
-[node name="HealthSprite" type="Sprite2D" parent="." unique_id=933984782]
-position = Vector2(0, -34)
-texture = SubResource("ViewportTexture_o3h8g")
-
-[node name="SubViewport" type="SubViewport" parent="HealthSprite" unique_id=1226539634]
-size = Vector2i(100, 20)
-
-[node name="ProgressBar" type="ProgressBar" parent="HealthSprite" unique_id=728114535]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -50.0
-offset_top = -10.0
-offset_right = -50.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="CameraComponent" type="Node" parent="." unique_id=492770765]
 script = ExtResource("15_1e7my")

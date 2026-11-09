@@ -1,6 +1,6 @@
 extends Control
 
-@onready var gridC: GridContainer = $VBoxContainer/ScrollContainer/GridContainer
+@onready var gridC: GridContainer = $VBoxContainer/GridContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

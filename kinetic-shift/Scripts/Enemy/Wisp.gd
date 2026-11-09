@@ -65,7 +65,7 @@ func _update_chase() -> void:
 	animated_sprite.flip_h = not (player.global_position.x < global_position.x)
 	velocity = global_position.direction_to(player.global_position) * chase_speed
 	if global_position.distance_to(player.global_position) < 10:
-		player.get_node("HealthComponent").damage(10, self)
+		player.get_node("HealthComponent").damage()
 
 func _change_state(next_state: State) -> void:
 	if state == next_state:
@@ -92,7 +92,7 @@ func die() -> void:
 
 	for shape in find_children("*", "CollisionShape2D", true, false):
 		(shape as CollisionShape2D).set_deferred("disabled", true)
-
+	GameManager.kills +=1
 	queue_free()
 
 func _on_animation_finished() -> void:

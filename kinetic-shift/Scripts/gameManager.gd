@@ -1,7 +1,6 @@
 extends Node
 
 var spawnpoint:Node2D
-var dedscreen:Control
 var pausescreen:Control
 var finishpoint:Node2D
 var timer: Control
@@ -11,21 +10,25 @@ const PLAYER = preload("uid://c4x33uyjhsfud")
 const HUD = preload("res://Scenes/F1aze23/hud.tscn")
 var player
 var hud
+var time
 
 var currentSave:SaveData
 
+var kills := 0
 
 var playerSave:String
-var timeSave:String = "user://save_data.tres"
+var statSave:String = "user://save_data.tres"
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().set_auto_accept_quit(false)
 
-func StartGame() -> void:
+func StartGame(path:String) -> void:
+	await get_tree().change_scene_to_file(path)
+	await get_tree().create_timer(0.2).timeout
+	kills = 0
 	hud = HUD.instantiate()
 	add_child(hud)
-	dedscreen = hud.get_node("DedScreen")
 	spawnpoint = get_tree().get_first_node_in_group("SpawnPoint")
 	pausescreen = hud.get_node("PauseScreen")
 	timer = hud.get_node("Timer")
@@ -38,10 +41,13 @@ func StartGame() -> void:
 	player.get_node("HealthComponent").connect("Death", _on_player_death)
 	
 	finishpoint.connect("PlayerFinished", _on_player_finished)
-	dedscreen.visible = false
 	
-	if ResourceLoader.exists(timeSave):
-		currentSave = ResourceLoader.load(timeSave) as SaveData
+	pausescreen.visible = false
+	get_tree().paused = false
+	paused = false
+	
+	if ResourceLoader.exists(statSave):
+		currentSave = ResourceLoader.load(statSave) as SaveData
 	else:
 		currentSave = SaveData.new()
 		
@@ -49,8 +55,8 @@ func StartGame() -> void:
 	print(playerSave)
 	
 func startMenu():
-	if ResourceLoader.exists(timeSave):
-		currentSave = ResourceLoader.load(timeSave) as SaveData
+	if ResourceLoader.exists(statSave):
+		currentSave = ResourceLoader.load(statSave) as SaveData
 	else:
 		currentSave = SaveData.new()
 
@@ -79,7 +85,11 @@ func _process(delta: float) -> void:
 
 func _on_player_finished() -> void:
 	print("player finished")
-	SaveTimer()
+	SaveStats()
+	player.death()
+	get_tree().change_scene_to_file("res://Scenes/F1aze23/GameOver.tscn")
+	DeletePSave()
+	hud.visible =false
 	pass
 
 func _on_player_death():
@@ -95,9 +105,6 @@ func SaveNode(node:Node):
 	print("saved")
 	
 func LoadNode():
-	if !FileAccess.file_exists(playerSave):
-		dedscreen.visible = true
-		return
 	var packed = load(playerSave) as PackedScene
 	if packed:
 		var loaded = packed.instantiate()
@@ -105,15 +112,21 @@ func LoadNode():
 		player.get_node("HealthComponent").connect("Death", _on_player_death)
 		add_child(loaded)
 		
-func SaveTimer():
+func SaveStats():
 	var sceneFile = get_tree().current_scene.scene_file_path.get_file()
 	var saveData = SaveData.new()
+	time = snapped(timer.inGameTimeElapsed, 0.001)
 	if currentSave.bestTimes.has(sceneFile):
-		if currentSave.bestTimes[sceneFile] > timer.inGameTimeElapsed:
-			currentSave.bestTimes[sceneFile] = timer.inGameTimeElapsed
+		if currentSave.bestTimes[sceneFile] > time:
+			currentSave.bestTimes[sceneFile] = time
 	else:
-		currentSave.bestTimes[sceneFile] = timer.inGameTimeElapsed
-	ResourceSaver.save(currentSave, timeSave)
+		currentSave.bestTimes[sceneFile] = time
+	if currentSave.killCounts.has(sceneFile):
+		if currentSave.killCounts[sceneFile] < kills:
+			currentSave.killCounts[sceneFile] = kills
+	else:
+		currentSave.killCounts[sceneFile] = kills
+	ResourceSaver.save(currentSave, statSave)
 	
 	
 func DeletePSave():

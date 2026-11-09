@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b4w6a3ioji416" path="res://Scripts/F1aze23/PauseScreen.gd" id="2_arp4d"]
 [ext_resource type="Script" uid="uid://cka82v68fsw7p" path="res://Scripts/timer.gd" id="2_s0xbc"]
 
+
 [sub_resource type="StyleBoxFlat" id="DashBackground"]
 
 bg_color = Color(0.035, 0.07, 0.09, 0.9)

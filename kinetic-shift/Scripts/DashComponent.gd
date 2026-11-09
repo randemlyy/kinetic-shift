@@ -22,12 +22,21 @@ var recharge_progress: float = 0.0
 var hit_window_left: float = 0.0
 
 var hitbox: Area2D
+<<<<<<< HEAD
 var active: bool = false
 var direction: Vector2 = Vector2.RIGHT
 var time_left: float = 0.0
 var distance_left: float = 0.0
 var dashMultiplier: float = 1.0
 
+=======
+var active = false
+var dash_ready = true
+var direction = Vector2.RIGHT
+var time_left = 0.0
+var distance_left = 0.0
+var dashMultiplier = 1
+>>>>>>> 5792b9f884c3b8edf32a4b954f73162b85131915
 
 func _ready() -> void:
 	charges = max_charges
@@ -140,6 +149,18 @@ func tick_hit_window(delta: float) -> void:
 		hitbox.set_deferred("monitoring", false)
 func find_enemy() -> PhysicsBody2D:
 
+<<<<<<< HEAD
+=======
+	if (
+		not active
+		and hit_window_left <= 0.0
+	):
+		return null
+	
+	hitbox.monitoring = true
+
+
+>>>>>>> 5792b9f884c3b8edf32a4b954f73162b85131915
 	if hitbox == null:
 		return null
 
@@ -152,10 +173,12 @@ func find_enemy() -> PhysicsBody2D:
 
 		if body.is_in_group("Enemy") and body is PhysicsBody2D:
 			return body as PhysicsBody2D
+	hitbox.monitoring = false
 
 	hitbox.monitoring = false
 
 	return null
+	
 
 func restore_charge(amount: int = 1) -> void:
 

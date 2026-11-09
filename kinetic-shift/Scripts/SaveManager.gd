@@ -1,6 +1,7 @@
+#class_name SaveManager
 extends Node
 
-const SAVE_PATH = "user://save_data.tres"
+const SAVE_PATH:String = "user://save_data.tres"
 var current_save:SaveData
 
 func _ready() -> void:
@@ -28,3 +29,12 @@ func load_game() -> void:
 		current_save = ResourceLoader.load(SAVE_PATH) as SaveData
 	else:
 		current_save = SaveData.new()
+
+func clear_all_saves() -> void:
+	if FileAccess.file_exists(SAVE_PATH):
+		var error = DirAccess.remove_absolute(SAVE_PATH)
+		if error == OK:
+			print("save files deleted")
+		else:
+			print("deletion failed")
+	current_save = SaveData.new()

@@ -2,22 +2,15 @@ class_name DebuffComponent
 extends Node
 
 var player
-enum  debuffType {WEAKNESS, SLOWNESS, DASH, STUN}
-var dType = debuffType.WEAKNESS
+enum  debuffType {SLOWNESS, DASH, STUN}
+var dType = debuffType.SLOWNESS
 
 func debuff(player:CharacterBody2D, num:int):
 	dType = num as debuffType
 	if player.has_node("debuff"):
 		return
 	name = "debuff"
-	if dType == debuffType.WEAKNESS:
-		var health = player.get_node("HealthComponent")
-		health.damageMultiplier = 1.5
-		print("weakened")
-		await get_tree().create_timer(5).timeout
-		health.damageMultiplier = 1
-		print("done")
-	elif dType == debuffType.SLOWNESS:
+	if dType == debuffType.SLOWNESS:
 		var move = player.get_node("MovementComponent")
 		var temp = move.speed
 		move.speed *= 0.7
