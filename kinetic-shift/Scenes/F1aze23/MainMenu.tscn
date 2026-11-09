@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://cgqh0nuty53og" path="res://addons/pixel_ui_scifi/themes/cyan.tres" id="1_8k5q3"]
 [ext_resource type="Script" uid="uid://lhbrdd0ookti" path="res://Scripts/F1aze23/MainMenu.gd" id="2_ww0eq"]
+[ext_resource type="Texture2D" uid="uid://cjfldnnmhaslc" path="res://Assets/Sprites/Sprite-0003.png" id="3_ww0eq"]
 
 [node name="MainMenu" type="Control" unique_id=570841929]
 layout_mode = 3
@@ -22,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="." unique_id=1344086566]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -65,5 +67,24 @@ theme_override_font_sizes/font_size = 52
 text = "QUIT"
 icon_alignment = 1
 
+[node name="Sprite0003" type="Sprite2D" parent="VBoxContainer" unique_id=656446637]
+position = Vector2(172, -123)
+texture = ExtResource("3_ww0eq")
+region_enabled = true
+region_rect = Rect2(0, 0, 448, 208.5)
+
+[node name="reset" type="Button" parent="." unique_id=1955473334]
+layout_mode = 0
+offset_left = 475.00003
+offset_top = 506.0
+offset_right = 811.0
+offset_bottom = 642.0
+scale = Vector2(0.6, 0.6)
+theme_override_font_sizes/font_size = 52
+text = "RESET
+STATS"
+icon_alignment = 1
+
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="button_down" from="reset" to="." method="_on_reset_button_down"]
