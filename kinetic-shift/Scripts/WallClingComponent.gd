@@ -22,7 +22,8 @@ var ceiling_duration: float = 1.2
 @export_group("Movement")
 
 @export var cling_force: float = 180.0
-
+@export var surface_acceleration: float = 2200.0
+@export var surface_deceleration: float = 2600.0
 
 @export_group("Jump")
 
@@ -43,7 +44,7 @@ var active := false
 var surface_type: SurfaceType = SurfaceType.NONE
 var surface_normal := Vector2.ZERO
 var time_left := 0.0
-
+var surface_velocity := 0.0
 var target_rotation := 0.0
 var visual_rotation := 0.0
 
@@ -128,6 +129,7 @@ func try_start(body: CharacterBody2D, cling_requested: bool) -> bool:
 			continue
 
 		surface_normal = normal
+		surface_velocity = 0.0
 
 		if is_side_wall:
 
@@ -155,26 +157,54 @@ func try_start(body: CharacterBody2D, cling_requested: bool) -> bool:
 	return false
 
 
-func get_cling_velocity(normal_speed: float) -> Vector2:
+func get_cling_velocity(
+	normal_speed: float,
+	move_x: float,
+	move_y: float,
+	delta: float
+	) -> Vector2:
 
 	var movement_axis := 0.0
 	var movement_direction := Vector2.ZERO
 
 	if surface_type == SurfaceType.SIDE_WALL:
 
-		movement_axis = Input.get_axis("move_up", "move_down")
+		movement_axis = move_y
 
 		movement_direction = Vector2.DOWN
 
 	elif surface_type == SurfaceType.CEILING:
 
-		movement_axis = Input.get_axis("move_left", "move_right")
+		movement_axis = move_x
 
 		movement_direction = Vector2.RIGHT
+		
+	var target_surface_speed := (
+		movement_axis * normal_speed * 0.9
+	)
+	
+	if absf(movement_axis) > 0.01:
+		surface_velocity = move_toward(
+			surface_velocity,
+			target_surface_speed,
+			surface_acceleration *  delta
+		
+		)
+		
+	else:
+		surface_velocity = move_toward(
+			surface_velocity,
+			0.0,
+			surface_deceleration * delta
+		)
 
-	var adhesion_velocity := -surface_normal * cling_force
-
-	var movement_velocity := movement_direction * movement_axis * normal_speed
+	var movement_velocity := (
+		movement_direction * surface_velocity
+		)
+		
+	var adhesion_velocity := (
+		-surface_normal * cling_force
+		)
 
 	return movement_velocity + adhesion_velocity
 
@@ -252,6 +282,7 @@ func release() -> void:
 	time_left = 0.0
 	target_rotation = 0.0
 	surface_type = SurfaceType.NONE
+	surface_velocity = 0.0
 	contact_locked = false
 	jump_grace_left = 0.0
 
@@ -262,6 +293,7 @@ func _end_cling(allow_jump: bool) -> void:
 	time_left = 0.0
 	target_rotation = 0.0
 	surface_type = SurfaceType.NONE
+	surface_velocity = 0.0
 
 	if allow_jump:
 		jump_grace_left = jump_grace_time
