@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://hqkxkq1jwaiv"]
 
 [ext_resource type="Script" uid="uid://86sjpyeekhpt" path="res://Scripts/mainmenu.gd" id="1_pposm"]
+[ext_resource type="Texture2D" uid="uid://cjfldnnmhaslc" path="res://Assets/Sprites/Sprite-0003.png" id="2_web8u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8fiki"]
 font_size = 64
@@ -23,11 +24,12 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="Control" unique_id=177200907]
+visible = false
 layout_mode = 0
-offset_left = 82.0
-offset_top = 247.0
-offset_right = 324.0
-offset_bottom = 426.0
+offset_left = 80.0
+offset_top = 332.0
+offset_right = 322.0
+offset_bottom = 511.0
 text = "KINETIC
 SHIFT"
 label_settings = SubResource("LabelSettings_8fiki")
@@ -47,6 +49,12 @@ offset_top = 470.0
 offset_right = 960.0
 offset_bottom = 501.0
 text = "QUIT"
+
+[node name="Sprite0003" type="Sprite2D" parent="." unique_id=235015711]
+position = Vector2(229, 333)
+texture = ExtResource("2_web8u")
+region_enabled = true
+region_rect = Rect2(0, 0, 448, 208.5)
 
 [connection signal="button_down" from="Control/play" to="." method="_on_play_button_down"]
 [connection signal="button_down" from="Control/quit" to="." method="_on_quit_button_down"]
